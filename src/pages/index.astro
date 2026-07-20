@@ -1,0 +1,210 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PlaceholderImage from '../components/PlaceholderImage.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import MapEmbed from '../components/MapEmbed.astro';
+import Button from '../components/Button.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { SITE } from '../data/site';
+
+const SERVICES = [
+  {
+    icon: '🐎',
+    title: 'Pension équestre (pré & box)',
+    description:
+      "Un hébergement adapté à chaque cheval, du pré collectif au box individuel, avec soins quotidiens assurés par notre équipe.",
+  },
+  {
+    icon: '🎓',
+    title: "Cours d'équitation",
+    description:
+      'Cours particuliers ou collectifs, du débutant à la compétition, encadrés par des moniteurs diplômés.',
+  },
+  {
+    icon: '✂️',
+    title: 'Tonte et soins',
+    description:
+      'Tonte de crins, tonte complète et toilettage pour préparer votre cheval aux beaux jours comme aux concours.',
+  },
+  {
+    icon: '🏆',
+    title: 'Stages et clinics',
+    description:
+      'Stages thématiques et clinics ponctuels animés par des intervenants professionnels, pour progresser sur plusieurs jours.',
+  },
+  {
+    icon: '🌳',
+    title: 'Installations complètes',
+    description:
+      'Manège couvert, carrière, rond de longe et zone de pansage en accès libre pour tous nos pensionnaires.',
+  },
+  {
+    icon: '🌾',
+    title: 'Fourrage, litière & matériel',
+    description:
+      "Foin, paille et copeaux disponibles sur place, ainsi qu'un dépôt-vente de matériel d'occasion entre cavaliers.",
+  },
+];
+---
+
+<BaseLayout title={SITE.name} description={SITE.description}>
+  <section class="hero">
+    <div class="hero__content">
+      <div class="container">
+        <p class="hero__eyebrow">Pension équestre de propriétaires</p>
+        <h1>{SITE.name}</h1>
+        <p class="hero__tagline">{SITE.tagline}</p>
+        <div class="hero__actions">
+          <Button href="/installations" variant="primary">Découvrir les installations</Button>
+          <Button href="/contact" variant="secondary">Nous contacter</Button>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <PlaceholderImage
+        label="Photo panoramique du haras au lever du soleil, chevaux au pré et bâtiments en arrière-plan"
+        ratio="21 / 9"
+        class="hero__image"
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container intro">
+      <p>
+        Nichées au calme et entourées de chemins de promenade, <strong>{SITE.name}</strong> accueillent
+        les chevaux de propriétaires en pension pré ou box, dans un cadre pensé pour leur
+        bien-être. Cours d'équitation, stages et installations complètes permettent à chacun,
+        cavalier débutant ou confirmé, de progresser à son rythme aux côtés de son cheval.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="services">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Nos prestations"
+        title="Des services pensés pour vous et votre cheval"
+        subtitle="De la pension au quotidien aux temps forts sportifs, retrouvez tout ce qu'il faut pour profiter pleinement de votre cheval."
+      />
+      <div class="grid grid--services">
+        {SERVICES.map((service) => <ServiceCard {...service} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Nous trouver"
+        title="Venez visiter le haras"
+        subtitle="Sur rendez-vous ou lors de nos journées portes ouvertes."
+        align="left"
+      />
+      <div class="location">
+        <div class="location__info">
+          <h3>Adresse</h3>
+          <address>
+            {SITE.address.line1}<br />
+            {SITE.address.postalCode} {SITE.address.city}
+          </address>
+
+          <h3>Horaires</h3>
+          <ul class="location__hours">
+            {
+              SITE.hours.map((slot) => (
+                <li><span>{slot.day}</span><span>{slot.time}</span></li>
+              ))
+            }
+          </ul>
+
+          <Button href="/contact" variant="ghost">Planifier une visite</Button>
+        </div>
+        <MapEmbed src={SITE.map.embedSrc} title="Carte de localisation du haras" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero__content {
+    background: var(--color-primary-dark);
+  }
+
+  .hero__content .container {
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .hero__eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: #d8cfb4;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero h1 {
+    color: #fff;
+    margin-bottom: 0.4em;
+  }
+
+  .hero__tagline {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.15rem;
+    max-width: 34rem;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .hero :global(.hero__image) {
+    margin-top: 2rem;
+  }
+
+  .intro {
+    max-width: 48rem;
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+  }
+
+  .location {
+    display: grid;
+    grid-template-columns: minmax(240px, 1fr) 2fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .location__info h3 {
+    margin-bottom: 0.4rem;
+  }
+
+  .location__info address {
+    font-style: normal;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-muted);
+  }
+
+  .location__hours {
+    margin-bottom: 1.75rem;
+  }
+
+  .location__hours li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.3rem;
+    border-bottom: 1px dashed var(--color-border);
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 800px) {
+    .location {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

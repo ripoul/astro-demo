@@ -1,0 +1,126 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  priceWithoutLessons: string;
+  priceWithLessons: string;
+  features: string[];
+  highlighted?: boolean;
+}
+
+const {
+  title,
+  description,
+  priceWithoutLessons,
+  priceWithLessons,
+  features,
+  highlighted = false,
+} = Astro.props;
+---
+
+<article class:list={['price-card', { 'price-card--highlighted': highlighted }]}>
+  {highlighted && <p class="price-card__tag">Le plus choisi</p>}
+  <h3>{title}</h3>
+  <p class="price-card__description">{description}</p>
+
+  <div class="price-card__prices">
+    <div>
+      <p class="price-card__amount">{priceWithoutLessons}</p>
+      <p class="price-card__label">sans cours</p>
+    </div>
+    <div>
+      <p class="price-card__amount">{priceWithLessons}</p>
+      <p class="price-card__label">avec cours</p>
+    </div>
+  </div>
+
+  <ul class="price-card__features">
+    {features.map((feature) => <li>{feature}</li>)}
+  </ul>
+
+  <a href="/contact" class="btn btn--ghost price-card__cta">Demander un devis</a>
+</article>
+
+<style>
+  .price-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .price-card--highlighted {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-md);
+  }
+
+  .price-card__tag {
+    position: absolute;
+    top: -0.8rem;
+    left: 2rem;
+    background: var(--color-accent);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.3em 0.9em;
+    border-radius: 999px;
+  }
+
+  .price-card__description {
+    color: var(--color-text-muted);
+  }
+
+  .price-card__prices {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.25rem 0;
+    margin-bottom: 1rem;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .price-card__amount {
+    font-family: var(--font-heading);
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    margin-bottom: 0.15em;
+  }
+
+  .price-card__label {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 0;
+  }
+
+  .price-card__features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.75rem;
+    flex-grow: 1;
+  }
+
+  .price-card__features li {
+    padding-left: 1.3rem;
+    position: relative;
+  }
+
+  .price-card__features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  .price-card__cta {
+    align-self: flex-start;
+  }
+</style>

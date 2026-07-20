@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PriceCard from '../components/PriceCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Button from '../components/Button.astro';
+
+const OPTIONS = [
+  { label: 'Cours particulier (à l\'unité)', price: '32 €' },
+  { label: 'Cours collectif (à l\'unité)', price: '22 €' },
+  { label: 'Carte 10 cours collectifs', price: '190 €' },
+  { label: 'Stage weekend (2 jours)', price: '150 €' },
+  { label: 'Tonte complète', price: '45 €' },
+  { label: 'Tonte de crins / queue', price: '15 €' },
+  { label: 'Transport en van (par sortie)', price: 'à partir de 60 €' },
+];
+---
+
+<BaseLayout
+  title="Tarifs"
+  description="Tarifs de la pension équestre : pension pré, pension box, avec ou sans cours d'équitation."
+>
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Tarifs"
+        title="Des formules adaptées à chaque cheval"
+        subtitle="Tarifs indicatifs, un devis personnalisé vous sera proposé lors de votre visite du haras."
+      />
+
+      <div class="grid grid--prices">
+        <PriceCard
+          title="Pension Pré"
+          description="Vie au grand air en troupeau, dans nos paddocks engazonnés avec abris."
+          priceWithoutLessons="280 €/mois"
+          priceWithLessons="340 €/mois"
+          features={[
+            'Accès pré collectif avec abri',
+            'Foin à volonté',
+            'Surveillance quotidienne',
+            'Accès carrière et rond de longe',
+          ]}
+        />
+        <PriceCard
+          title="Pension Box"
+          description="Box individuel avec sortie quotidienne au paddock, pour un confort maximal."
+          priceWithoutLessons="420 €/mois"
+          priceWithLessons="480 €/mois"
+          highlighted
+          features={[
+            'Box individuel de 12 m²',
+            'Litière et alimentation incluses',
+            'Sortie quotidienne au paddock',
+            'Accès manège couvert, carrière et rond de longe',
+          ]}
+        />
+      </div>
+
+      <p class="tarifs-note">
+        Les formules « avec cours » incluent un cours collectif hebdomadaire encadré par un
+        moniteur. Tarifs 2026 indicatifs, susceptibles d'évoluer.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <SectionHeading
+        eyebrow="À la carte"
+        title="Options complémentaires"
+        subtitle="Pour compléter votre pension selon vos besoins du moment."
+      />
+
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Prestation</th>
+            <th scope="col">Tarif</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            OPTIONS.map((option) => (
+              <tr>
+                <td>{option.label}</td>
+                <td>{option.price}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+
+      <div class="tarifs-cta">
+        <p>Une question sur nos formules ou besoin d'un devis personnalisé ?</p>
+        <Button href="/contact">Demander un devis</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .tarifs-note {
+    max-width: 40rem;
+    margin: 2rem auto 0;
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  table {
+    max-width: 42rem;
+    margin-inline: auto;
+  }
+
+  .tarifs-cta {
+    max-width: 42rem;
+    margin: 2.5rem auto 0;
+    text-align: center;
+  }
+
+  .tarifs-cta p {
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+  }
+</style>

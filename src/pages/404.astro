@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+---
+
+<BaseLayout title="Page introuvable" description="Cette page n'existe pas ou plus.">
+  <section class="section not-found">
+    <div class="container">
+      <p class="not-found__code">404</p>
+      <h1>Ce cheval-là s'est échappé du paddock</h1>
+      <p>La page que vous cherchez n'existe pas ou a été déplacée.</p>
+      <Button href="/">Retour à l'accueil</Button>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    text-align: center;
+    padding-block: clamp(4rem, 10vw, 7rem);
+  }
+
+  .not-found__code {
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    margin-bottom: 0;
+  }
+
+  .not-found p {
+    color: var(--color-text-muted);
+    margin-bottom: 1.75rem;
+  }
+</style>

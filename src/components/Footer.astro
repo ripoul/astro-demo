@@ -1,0 +1,127 @@
+---
+import { NAV_LINKS, SITE } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <div>
+      <p class="site-footer__brand">{SITE.name}</p>
+      <p>{SITE.tagline}</p>
+      <ul class="site-footer__social">
+        <li><a href={SITE.social.facebook}>Facebook</a></li>
+        <li><a href={SITE.social.instagram}>Instagram</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="site-footer__title">Navigation</h2>
+      <ul>
+        {
+          NAV_LINKS.map((link) => (
+            <li><a href={link.href}>{link.label}</a></li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="site-footer__title">Contact</h2>
+      <address>
+        {SITE.address.line1}<br />
+        {SITE.address.postalCode} {SITE.address.city}<br />
+        <a href={SITE.phoneHref}>{SITE.phone}</a><br />
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      </address>
+    </div>
+
+    <div>
+      <h2 class="site-footer__title">Horaires</h2>
+      <ul class="site-footer__hours">
+        {
+          SITE.hours.map((slot) => (
+            <li><span>{slot.day}</span><span>{slot.time}</span></li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="container site-footer__bottom">
+    <p>&copy; {year} {SITE.name}. Site de démonstration réalisé avec Astro.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-primary-dark);
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: clamp(3rem, 6vw, 6rem);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    padding-block: 3rem;
+  }
+
+  .site-footer__brand {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .site-footer__title {
+    font-size: 1rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.9rem;
+  }
+
+  .site-footer a {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+  }
+
+  .site-footer a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  .site-footer li {
+    margin-bottom: 0.5rem;
+  }
+
+  .site-footer__social {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  address {
+    font-style: normal;
+    line-height: 1.7;
+  }
+
+  .site-footer__hours li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .site-footer__bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-block: 1.25rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .site-footer__bottom p {
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,85 @@
+---
+// Remplace une vraie photo tant qu'elle n'est pas disponible : cadre avec une
+// croix en diagonale et le texte décrivant ce que la photo montrera.
+interface Props {
+  label: string;
+  ratio?: string;
+  class?: string;
+}
+
+const { label, ratio = '4 / 3', class: className } = Astro.props;
+---
+
+<div
+  class:list={['placeholder', className]}
+  style={`--ratio: ${ratio}`}
+  role="img"
+  aria-label={label}
+>
+  <span class="placeholder__icon" aria-hidden="true">📷</span>
+  <span class="placeholder__label" aria-hidden="true">{label}</span>
+</div>
+
+<style>
+  .placeholder {
+    position: relative;
+    aspect-ratio: var(--ratio);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    overflow: hidden;
+    background: var(--color-surface-alt);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .placeholder::before,
+  .placeholder::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .placeholder::before {
+    background: linear-gradient(
+      to bottom right,
+      transparent calc(50% - 1px),
+      var(--color-border) calc(50% - 1px),
+      var(--color-border) calc(50% + 1px),
+      transparent calc(50% + 1px)
+    );
+  }
+
+  .placeholder::after {
+    background: linear-gradient(
+      to top right,
+      transparent calc(50% - 1px),
+      var(--color-border) calc(50% - 1px),
+      var(--color-border) calc(50% + 1px),
+      transparent calc(50% + 1px)
+    );
+  }
+
+  .placeholder__icon {
+    position: relative;
+    z-index: 1;
+    font-size: 1.5rem;
+    opacity: 0.8;
+  }
+
+  .placeholder__label {
+    position: relative;
+    z-index: 1;
+    max-width: 85%;
+    background: rgba(255, 255, 255, 0.88);
+    padding: 0.4em 0.8em;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    line-height: 1.35;
+  }
+</style>

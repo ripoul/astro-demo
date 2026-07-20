@@ -1,0 +1,99 @@
+---
+import PlaceholderImage from './PlaceholderImage.astro';
+import CategoryBadge, { type BlogCategory } from './CategoryBadge.astro';
+
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  date: Date;
+  category: BlogCategory;
+  cover: string;
+}
+
+const { href, title, description, date, category, cover } = Astro.props;
+
+const formattedDate = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(date);
+---
+
+<article class="blog-card">
+  <a href={href} class="blog-card__image-link" tabindex="-1" aria-hidden="true">
+    <PlaceholderImage label={cover} ratio="16 / 10" />
+  </a>
+  <div class="blog-card__body">
+    <div class="blog-card__meta">
+      <CategoryBadge category={category} />
+      <time datetime={date.toISOString()}>{formattedDate}</time>
+    </div>
+    <h3><a href={href}>{title}</a></h3>
+    <p>{description}</p>
+    <a href={href} class="blog-card__link">Lire la suite →</a>
+  </div>
+</article>
+
+<style>
+  .blog-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blog-card__image-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .blog-card__body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .blog-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .blog-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .blog-card h3 a {
+    color: var(--color-primary-dark);
+    text-decoration: none;
+  }
+
+  .blog-card h3 a:hover {
+    color: var(--color-accent-dark);
+  }
+
+  .blog-card p {
+    color: var(--color-text-muted);
+    flex-grow: 1;
+  }
+
+  .blog-card__link {
+    align-self: flex-start;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--color-accent-dark);
+  }
+
+  .blog-card__link:hover {
+    text-decoration: underline;
+  }
+</style>

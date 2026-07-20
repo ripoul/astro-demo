@@ -1,0 +1,70 @@
+---
+const SUBJECTS = [
+  'Renseignement pension (pré / box)',
+  "Cours d'équitation",
+  'Stage / clinic',
+  'Visite du haras',
+  'Autre demande',
+];
+---
+
+<form class="contact-form" method="post">
+  <div class="contact-form__row">
+    <div class="contact-form__field">
+      <label for="name">Nom complet</label>
+      <input type="text" id="name" name="name" autocomplete="name" required />
+    </div>
+    <div class="contact-form__field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" autocomplete="email" required />
+    </div>
+  </div>
+
+  <div class="contact-form__row">
+    <div class="contact-form__field">
+      <label for="phone">Téléphone <span class="contact-form__optional">(optionnel)</span></label>
+      <input type="tel" id="phone" name="phone" autocomplete="tel" />
+    </div>
+    <div class="contact-form__field">
+      <label for="subject">Sujet</label>
+      <select id="subject" name="subject" required>
+        {SUBJECTS.map((subject) => <option>{subject}</option>)}
+      </select>
+    </div>
+  </div>
+
+  <div class="contact-form__field">
+    <label for="message">Message</label>
+    <textarea id="message" name="message" rows="5" required></textarea>
+  </div>
+
+  <button type="submit" class="btn btn--primary">Envoyer le message</button>
+
+  <p class="contact-form__note">
+    Formulaire de démonstration : l'envoi n'est pas encore connecté à un service de
+    messagerie.
+  </p>
+</form>
+
+<style>
+  .contact-form__row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .contact-form__field {
+    margin-bottom: 1.25rem;
+  }
+
+  .contact-form__optional {
+    font-weight: 400;
+    color: var(--color-text-muted);
+  }
+
+  .contact-form__note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+</style>

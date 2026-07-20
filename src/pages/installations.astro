@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FacilityCard from '../components/FacilityCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+
+const FACILITIES = [
+  {
+    title: 'Manège couvert',
+    description:
+      "Un manège couvert idéal pour travailler par tous les temps et accueillir les cours collectifs.",
+    imageLabel: 'Photo intérieure du manège couvert avec sol en sable et cavalier au trot',
+    details: ['20 × 40 m', 'Sol en sable fibré', 'Éclairage LED', 'Miroirs muraux'],
+  },
+  {
+    title: 'Carrière extérieure',
+    description:
+      'Une grande carrière extérieure, parfaite pour le travail sur le plat comme pour les séances de sauts.',
+    imageLabel: "Photo de la carrière extérieure avec des obstacles installés",
+    details: ['40 × 60 m', 'Sol sable-fibre drainant', "Parcours d'obstacles modulables"],
+  },
+  {
+    title: 'Rond de longe',
+    description:
+      'Un espace pour le travail à pied, la mise en confiance des jeunes chevaux et l\'échauffement avant les reprises.',
+    imageLabel: 'Photo du rond de longe avec un cheval longé',
+    details: ['18 m de diamètre', 'Sol souple', 'Parois pleines sécurisantes'],
+  },
+  {
+    title: 'Zone de pansage',
+    description:
+      'Des aires de pansage couvertes et équipées, pour préparer votre cheval dans le calme avant chaque séance.',
+    imageLabel: "Photo de la zone de pansage couverte avec plusieurs postes d'attache",
+    details: ['6 postes couverts', 'Douche chauffante', 'Rangements individuels'],
+  },
+  {
+    title: 'Boxes & prés',
+    description:
+      "Boxes spacieux et paddocks engazonnés se complètent pour offrir à chaque cheval l'équilibre entre confort et vie au grand air.",
+    imageLabel: 'Photo d\'une rangée de boxes donnant sur des prés clôturés',
+    details: ['Boxes de 12 m²', 'Prés en rotation', 'Abris au champ'],
+  },
+  {
+    title: 'Sellerie & local matériel',
+    description:
+      'Une sellerie commune et des casiers individuels sécurisés pour ranger selles, licols et matériel.',
+    imageLabel: 'Photo de la sellerie avec des selles rangées sur leurs supports',
+    details: ['Casiers individuels', 'Local couvertures', 'Point entretien du matériel'],
+  },
+];
+---
+
+<BaseLayout
+  title="Nos installations"
+  description="Découvrez les installations du haras : manège couvert, carrière, rond de longe, zone de pansage, boxes et sellerie."
+>
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Les installations"
+        title="Tout le nécessaire pour le travail et le bien-être de votre cheval"
+        subtitle="Des espaces pensés et entretenus au quotidien, accessibles à tous nos pensionnaires."
+      />
+      <div class="grid grid--facilities">
+        {FACILITIES.map((facility) => <FacilityCard {...facility} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

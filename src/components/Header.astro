@@ -1,0 +1,177 @@
+---
+import { NAV_LINKS, SITE } from '../data/site';
+
+const currentPath = Astro.url.pathname;
+
+function isActive(href: string) {
+  if (href === '/') return currentPath === '/';
+  return currentPath === href || currentPath.startsWith(`${href}/`);
+}
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a href="/" class="brand">
+      <span class="brand__mark" aria-hidden="true">🐴</span>
+      <span class="brand__name">{SITE.name}</span>
+    </a>
+
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="primary-nav"
+    >
+      <span class="visually-hidden">Ouvrir le menu</span>
+      <span class="nav-toggle__bar" aria-hidden="true"></span>
+      <span class="nav-toggle__bar" aria-hidden="true"></span>
+      <span class="nav-toggle__bar" aria-hidden="true"></span>
+    </button>
+
+    <nav id="primary-nav" class="nav" aria-label="Navigation principale">
+      <ul class="nav__list">
+        {
+          NAV_LINKS.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="nav__link"
+                aria-current={isActive(link.href) ? 'page' : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const nav = document.getElementById('primary-nav');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+    nav?.classList.toggle('is-open', !isOpen);
+  });
+
+  nav?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      toggle?.setAttribute('aria-expanded', 'false');
+      nav.classList.remove('is-open');
+    });
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 0.9rem;
+    gap: 1rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--color-primary-dark);
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .brand__mark {
+    font-size: 1.6rem;
+  }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    cursor: pointer;
+  }
+
+  .nav-toggle__bar {
+    display: block;
+    width: 1.4rem;
+    height: 2px;
+    margin-inline: auto;
+    background: var(--color-primary-dark);
+  }
+
+  .nav__list {
+    display: flex;
+    gap: 1.75rem;
+  }
+
+  .nav__link {
+    text-decoration: none;
+    color: var(--color-text);
+    font-weight: 600;
+    padding-block: 0.25rem;
+    border-bottom: 2px solid transparent;
+  }
+
+  .nav__link:hover {
+    color: var(--color-accent-dark);
+  }
+
+  .nav__link[aria-current='page'] {
+    color: var(--color-accent-dark);
+    border-bottom-color: var(--color-accent);
+  }
+
+  @media (max-width: 720px) {
+    .nav-toggle {
+      display: flex;
+    }
+
+    .nav {
+      position: absolute;
+      inset-inline: 0;
+      top: 100%;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: var(--shadow-md);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease;
+    }
+
+    .nav.is-open {
+      max-height: 24rem;
+    }
+
+    .nav__list {
+      flex-direction: column;
+      gap: 0;
+      padding: 0.5rem 1.5rem 1.5rem;
+    }
+
+    .nav__link {
+      display: block;
+      padding-block: 0.75rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+  }
+</style>

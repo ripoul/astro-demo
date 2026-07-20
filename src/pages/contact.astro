@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MapEmbed from '../components/MapEmbed.astro';
+import ContactForm from '../components/ContactForm.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { SITE } from '../data/site';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Contactez Les Écuries du Vallon pour toute question sur la pension, les cours ou une visite du haras."
+>
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Contact"
+        title="Une question ? Parlons-en"
+        subtitle="Par téléphone, par email ou via le formulaire ci-dessous, nous vous répondons rapidement."
+      />
+
+      <div class="contact-layout">
+        <div class="contact-info">
+          <h3>Coordonnées</h3>
+          <address>
+            {SITE.address.line1}<br />
+            {SITE.address.postalCode} {SITE.address.city}
+          </address>
+          <p>
+            <a href={SITE.phoneHref}>{SITE.phone}</a><br />
+            <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+          </p>
+
+          <h3>Horaires</h3>
+          <ul class="contact-hours">
+            {
+              SITE.hours.map((slot) => (
+                <li><span>{slot.day}</span><span>{slot.time}</span></li>
+              ))
+            }
+          </ul>
+
+          <h3>Réseaux</h3>
+          <ul class="contact-social">
+            <li><a href={SITE.social.facebook}>Facebook</a></li>
+            <li><a href={SITE.social.instagram}>Instagram</a></li>
+          </ul>
+
+          <MapEmbed src={SITE.map.embedSrc} title="Carte de localisation du haras" />
+        </div>
+
+        <div class="contact-form-wrapper">
+          <h3>Envoyer un message</h3>
+          <ContactForm />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-layout {
+    display: grid;
+    grid-template-columns: minmax(240px, 1fr) 1.4fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .contact-info h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-info h3:not(:first-child) {
+    margin-top: 1.5rem;
+  }
+
+  .contact-info address,
+  .contact-info p {
+    font-style: normal;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .contact-hours li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.3rem;
+    border-bottom: 1px dashed var(--color-border);
+    color: var(--color-text-muted);
+  }
+
+  .contact-social {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-info :global(.map-embed) {
+    margin-top: 1.5rem;
+  }
+
+  .contact-form-wrapper {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .contact-form-wrapper h3 {
+    margin-bottom: 1.25rem;
+  }
+
+  @media (max-width: 800px) {
+    .contact-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

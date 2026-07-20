@@ -1,0 +1,45 @@
+---
+export type BlogCategory = 'resultats' | 'stage' | 'actualite';
+
+interface Props {
+  category: BlogCategory;
+}
+
+const LABELS: Record<BlogCategory, string> = {
+  resultats: 'Résultats',
+  stage: 'Stage',
+  actualite: 'Actualité',
+};
+
+const { category } = Astro.props;
+---
+
+<span class:list={['badge', `badge--${category}`]}>{LABELS[category]}</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3em 0.85em;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .badge--resultats {
+    background: #f6e6c8;
+    color: #7a4f12;
+  }
+
+  .badge--stage {
+    background: #dfead9;
+    color: #35502f;
+  }
+
+  .badge--actualite {
+    background: #dfe6ec;
+    color: #2f4a5c;
+  }
+</style>
