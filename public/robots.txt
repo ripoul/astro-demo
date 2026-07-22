@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ecuries-du-vallon.fr/sitemap-index.xml

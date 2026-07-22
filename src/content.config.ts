@@ -9,6 +9,8 @@ const blog = defineCollection({
     date: z.coerce.date(),
     category: z.enum(['resultats', 'stage', 'actualite']),
     cover: z.string(),
+    // Chemin de la vraie photo d'en-tête (og:image / twitter:image), une fois disponible.
+    image: z.string().optional(),
     draft: z.boolean().default(false),
   }),
 });

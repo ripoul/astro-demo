@@ -16,6 +16,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   <section class="section">
     <div class="container">
       <SectionHeading
+        as="h1"
         eyebrow="Actualités"
         title="Les dernières nouvelles du haras"
         subtitle="Résultats en concours, annonces de stages et vie du haras au fil des saisons."

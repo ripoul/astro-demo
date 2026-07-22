@@ -1,17 +1,42 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE } from '../data/site';
+import { SITE, OPENING_HOURS_SCHEMA } from '../data/site';
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description?: string;
+  image?: string;
 }
 
-const { title, description = SITE.description } = Astro.props;
+const { title, description = SITE.description, image } = Astro.props;
 const pageTitle = title === SITE.name ? SITE.name : `${title} · ${SITE.name}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+const ogImageURL = image ? new URL(image, Astro.site ?? Astro.url.origin).toString() : undefined;
+
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SportsActivityLocation',
+  name: SITE.name,
+  description: SITE.description,
+  telephone: SITE.phone,
+  email: SITE.email,
+  url: (Astro.site ?? Astro.url).toString(),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.address.line1,
+    postalCode: SITE.address.postalCode,
+    addressLocality: SITE.address.city,
+    addressCountry: 'FR',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: SITE.map.lat,
+    longitude: SITE.map.lng,
+  },
+  openingHoursSpecification: OPENING_HOURS_SCHEMA,
+};
 ---
 
 <html lang="fr">
@@ -29,7 +54,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin)
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
-    <meta name="twitter:card" content="summary" />
+    {ogImageURL && <meta property="og:image" content={ogImageURL} />}
+    <meta name="twitter:card" content={ogImageURL ? 'summary_large_image' : 'summary'} />
+    {ogImageURL && <meta name="twitter:image" content={ogImageURL} />}
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -37,6 +64,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin)
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+    <slot name="head" />
   </head>
   <body>
     <a href="#contenu" class="skip-link">Aller au contenu principal</a>
