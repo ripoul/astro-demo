@@ -8,7 +8,8 @@ const SUBJECTS = [
 ];
 ---
 
-<form class="contact-form" method="post">
+<form class="contact-form" method="post" name="contact" data-netlify="true">
+  <input type="hidden" name="form-name" value="contact" />
   <div class="contact-form__row">
     <div class="contact-form__field">
       <label for="name">Nom complet</label>
@@ -39,12 +40,85 @@ const SUBJECTS = [
   </div>
 
   <button type="submit" class="btn btn--primary">Envoyer le message</button>
-
-  <p class="contact-form__note">
-    Formulaire de démonstration : l'envoi n'est pas encore connecté à un service de
-    messagerie.
-  </p>
 </form>
+
+<div class="toast" role="status" aria-atomic="true" hidden>
+  <span class="toast__icon" aria-hidden="true"></span>
+  <p class="toast__message"></p>
+  <button type="button" class="toast__close" aria-label="Fermer la notification">&times;</button>
+</div>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('.contact-form');
+  const toast = document.querySelector<HTMLDivElement>('.toast');
+  const toastIcon = toast?.querySelector<HTMLSpanElement>('.toast__icon');
+  const toastMessage = toast?.querySelector<HTMLParagraphElement>('.toast__message');
+  const toastClose = toast?.querySelector<HTMLButtonElement>('.toast__close');
+
+  let toastTimeout: ReturnType<typeof setTimeout> | undefined;
+
+  function showToast(message: string, variant: 'success' | 'error') {
+    if (!toast || !toastMessage || !toastIcon) return;
+
+    toastMessage.textContent = message;
+    toastIcon.textContent = variant === 'success' ? '✓' : '!';
+    toast.classList.toggle('toast--success', variant === 'success');
+    toast.classList.toggle('toast--error', variant === 'error');
+    toast.hidden = false;
+
+    requestAnimationFrame(() => toast.classList.add('is-visible'));
+
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(hideToast, 6000);
+  }
+
+  function hideToast() {
+    if (!toast) return;
+    toast.classList.remove('is-visible');
+    setTimeout(() => {
+      toast.hidden = true;
+    }, 200);
+  }
+
+  toastClose?.addEventListener('click', () => {
+    clearTimeout(toastTimeout);
+    hideToast();
+  });
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const submitButton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const formData = new FormData(form);
+    const params = new URLSearchParams();
+    formData.forEach((value, key) => params.append(key, String(value)));
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Envoi en cours…';
+    }
+
+    try {
+      const response = await fetch(window.location.pathname, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString(),
+      });
+
+      if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+
+      form.reset();
+      showToast('Merci ! Votre message a bien été envoyé, nous vous répondons rapidement.', 'success');
+    } catch (error) {
+      showToast('Une erreur est survenue. Réessayez ou appelez-nous directement.', 'error');
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Envoyer le message';
+      }
+    }
+  });
+</script>
 
 <style>
   .contact-form__row {
@@ -62,9 +136,83 @@ const SUBJECTS = [
     color: var(--color-text-muted);
   }
 
-  .contact-form__note {
-    margin-top: 1rem;
-    font-size: 0.85rem;
+  .toast {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 1000;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    max-width: 22rem;
+    padding: 1rem 1.1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    transform: translateY(0.75rem);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+  }
+
+  .toast.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .toast__icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .toast--error .toast__icon {
+    background: #a33d2d;
+  }
+
+  .toast__message {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--color-text);
+  }
+
+  .toast__close {
+    margin-left: auto;
+    flex-shrink: 0;
+    border: none;
+    background: transparent;
     color: var(--color-text-muted);
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.1rem 0.3rem;
+  }
+
+  .toast__close:hover {
+    color: var(--color-text);
+  }
+
+  @media (max-width: 480px) {
+    .toast {
+      left: 1rem;
+      right: 1rem;
+      max-width: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toast {
+      transition: none;
+    }
   }
 </style>
