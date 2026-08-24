@@ -1,0 +1,61 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BlogCard from '../../../components/BlogCard.astro';
+import SectionHeading from '../../../components/SectionHeading.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import { CATEGORY_LABELS, type BlogCategory } from '../../../components/CategoryBadge.astro';
+import { SITE } from '../../../data/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const categories = [...new Set(posts.map((post) => post.data.category))];
+
+  return categories.map((category) => ({
+    params: { category },
+    props: {
+      category,
+      posts: posts
+        .filter((post) => post.data.category === category)
+        .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()),
+    },
+  }));
+}
+
+interface Props {
+  category: BlogCategory;
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { category, posts } = Astro.props;
+const label = CATEGORY_LABELS[category];
+---
+
+<BaseLayout title={label} description={`Articles de la catégorie ${label} : ${SITE.description}`}>
+  <section class="section">
+    <div class="container">
+      <Breadcrumbs
+        items={[
+          { label: 'Actualités', href: '/blog' },
+          { label, href: `/blog/categorie/${category}/` },
+        ]}
+      />
+      <SectionHeading as="h1" eyebrow="Actualités" title={label} />
+      <div class="grid grid--blog">
+        {
+          posts.map((post) => (
+            <BlogCard
+              href={`/blog/${post.id}/`}
+              title={post.data.title}
+              description={post.data.description}
+              date={post.data.date}
+              category={post.data.category}
+              cover={post.data.cover}
+              coverAlt={post.data.coverAlt}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

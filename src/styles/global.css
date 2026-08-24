@@ -15,8 +15,8 @@
   --color-accent: #b5792e;
   --color-accent-dark: #96601f;
 
-  --font-heading: 'Fraunces', 'Georgia', serif;
-  --font-body: 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-heading: 'Fraunces Variable', 'Georgia', serif;
+  --font-body: 'Source Sans 3 Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --container-width: 72rem;
   --radius-sm: 6px;

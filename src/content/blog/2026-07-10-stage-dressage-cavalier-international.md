@@ -3,7 +3,8 @@ title: "Stage exceptionnel en septembre avec un cavalier international"
 description: "Les Écuries du Vallon organisent un stage de dressage encadré par un cavalier de niveau international les 12 et 13 septembre. Places limitées, inscriptions ouvertes."
 date: 2026-07-10
 category: stage
-cover: "Photo d'un cavalier professionnel saluant le public à cheval lors d'un concours international"
+cover: ../../assets/images/blog-stage-dressage.jpg
+coverAlt: "Cavalier professionnel saluant le public à cheval lors d'un concours international"
 ---
 
 Grande nouvelle pour cette rentrée : nous accueillerons **[Nom du cavalier international – intervenant à confirmer]** pour un stage de dressage exceptionnel les **12 et 13 septembre 2026**.

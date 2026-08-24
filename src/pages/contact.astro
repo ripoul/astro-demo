@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import MapEmbed from '../components/MapEmbed.astro';
 import ContactForm from '../components/ContactForm.astro';
 import SectionHeading from '../components/SectionHeading.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { SITE } from '../data/site';
 ---
 
@@ -12,6 +13,7 @@ import { SITE } from '../data/site';
 >
   <section class="section">
     <div class="container">
+      <Breadcrumbs items={[{ label: 'Contact', href: '/contact' }]} />
       <SectionHeading
         as="h1"
         eyebrow="Contact"

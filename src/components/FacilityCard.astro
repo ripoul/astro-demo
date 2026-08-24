@@ -1,18 +1,20 @@
 ---
-import PlaceholderImage from './PlaceholderImage.astro';
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
 
 interface Props {
   title: string;
   description: string;
-  imageLabel: string;
+  image: ImageMetadata;
+  imageAlt: string;
   details?: string[];
 }
 
-const { title, description, imageLabel, details = [] } = Astro.props;
+const { title, description, image, imageAlt, details = [] } = Astro.props;
 ---
 
 <article class="facility-card">
-  <PlaceholderImage label={imageLabel} ratio="4 / 3" />
+  <Image src={image} alt={imageAlt} width={800} height={600} class="facility-card__image" />
   <div class="facility-card__body">
     <h3>{title}</h3>
     <p>{description}</p>
@@ -37,6 +39,11 @@ const { title, description, imageLabel, details = [] } = Astro.props;
     box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
+  }
+
+  .facility-card :global(.facility-card__image) {
+    display: block;
+    width: 100%;
   }
 
   .facility-card__body {

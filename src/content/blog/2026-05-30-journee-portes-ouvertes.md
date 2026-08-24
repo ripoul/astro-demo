@@ -3,7 +3,8 @@ title: "Retour sur notre journée portes ouvertes"
 description: "Ateliers, démonstrations et pension d'un après-midi : merci à toutes les familles venues découvrir le haras lors de notre journée portes ouvertes du 24 mai."
 date: 2026-05-30
 category: actualite
-cover: "Photo de familles et d'enfants découvrant des poneys lors d'une journée portes ouvertes"
+cover: ../../assets/images/blog-portes-ouvertes.jpg
+coverAlt: "Familles et enfants découvrant des poneys lors d'une journée portes ouvertes"
 ---
 
 Le samedi 24 mai, le haras a ouvert ses portes le temps d'un après-midi aux familles du secteur curieuses de découvrir la vie d'une pension équestre.

@@ -2,48 +2,61 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FacilityCard from '../components/FacilityCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import manegeImage from '../assets/images/facility-manege.jpg';
+import carriereImage from '../assets/images/facility-carriere.jpg';
+import rondDeLongeImage from '../assets/images/facility-rond-de-longe.jpg';
+import pansageImage from '../assets/images/facility-pansage.jpg';
+import boxesImage from '../assets/images/facility-boxes.jpg';
+import sellerieImage from '../assets/images/facility-sellerie.jpg';
 
 const FACILITIES = [
   {
     title: 'Manège couvert',
     description:
       "Un manège couvert idéal pour travailler par tous les temps et accueillir les cours collectifs.",
-    imageLabel: 'Photo intérieure du manège couvert avec sol en sable et cavalier au trot',
+    image: manegeImage,
+    imageAlt: 'Manège couvert avec sol en sable et cavalier au trot',
     details: ['20 × 40 m', 'Sol en sable fibré', 'Éclairage LED', 'Miroirs muraux'],
   },
   {
     title: 'Carrière extérieure',
     description:
       'Une grande carrière extérieure, parfaite pour le travail sur le plat comme pour les séances de sauts.',
-    imageLabel: "Photo de la carrière extérieure avec des obstacles installés",
+    image: carriereImage,
+    imageAlt: 'Carrière extérieure avec des obstacles installés',
     details: ['40 × 60 m', 'Sol sable-fibre drainant', "Parcours d'obstacles modulables"],
   },
   {
     title: 'Rond de longe',
     description:
       'Un espace pour le travail à pied, la mise en confiance des jeunes chevaux et l\'échauffement avant les reprises.',
-    imageLabel: 'Photo du rond de longe avec un cheval longé',
+    image: rondDeLongeImage,
+    imageAlt: 'Rond de longe avec un cheval longé',
     details: ['18 m de diamètre', 'Sol souple', 'Parois pleines sécurisantes'],
   },
   {
     title: 'Zone de pansage',
     description:
       'Des aires de pansage couvertes et équipées, pour préparer votre cheval dans le calme avant chaque séance.',
-    imageLabel: "Photo de la zone de pansage couverte avec plusieurs postes d'attache",
+    image: pansageImage,
+    imageAlt: "Zone de pansage couverte avec plusieurs postes d'attache",
     details: ['6 postes couverts', 'Douche chauffante', 'Rangements individuels'],
   },
   {
     title: 'Boxes & prés',
     description:
       "Boxes spacieux et paddocks engazonnés se complètent pour offrir à chaque cheval l'équilibre entre confort et vie au grand air.",
-    imageLabel: 'Photo d\'une rangée de boxes donnant sur des prés clôturés',
+    image: boxesImage,
+    imageAlt: 'Rangée de boxes donnant sur des prés clôturés',
     details: ['Boxes de 12 m²', 'Prés en rotation', 'Abris au champ'],
   },
   {
     title: 'Sellerie & local matériel',
     description:
       'Une sellerie commune et des casiers individuels sécurisés pour ranger selles, licols et matériel.',
-    imageLabel: 'Photo de la sellerie avec des selles rangées sur leurs supports',
+    image: sellerieImage,
+    imageAlt: 'Sellerie avec des selles rangées sur leurs supports',
     details: ['Casiers individuels', 'Local couvertures', 'Point entretien du matériel'],
   },
 ];
@@ -55,6 +68,7 @@ const FACILITIES = [
 >
   <section class="section">
     <div class="container">
+      <Breadcrumbs items={[{ label: 'Installations', href: '/installations' }]} />
       <SectionHeading
         as="h1"
         eyebrow="Les installations"

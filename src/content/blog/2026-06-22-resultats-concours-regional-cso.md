@@ -3,7 +3,8 @@ title: "Beau podium régional pour nos couples au concours de CSO"
 description: "Le week-end des 13 et 14 juin, plusieurs cavaliers du haras ont représenté Les Écuries du Vallon au concours régional de saut d'obstacles avec de belles performances à la clé."
 date: 2026-06-22
 category: resultats
-cover: "Photo d'un cheval et son cavalier sautant un oxer fleuri lors d'un concours"
+cover: ../../assets/images/blog-concours-cso.jpg
+coverAlt: "Cheval et cavalier sautant un oxer fleuri lors d'un concours"
 ---
 
 Le concours régional de saut d'obstacles des 13 et 14 juin a rassemblé une centaine de couples cavalier-cheval, dont plusieurs pensionnaires des Écuries du Vallon engagés du niveau Club à Amateur.

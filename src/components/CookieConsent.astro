@@ -1,0 +1,86 @@
+---
+// Affiché tant que l'internaute n'a pas fait de choix ; le consentement est
+// lu par Analytics.astro avant de charger le moindre script de mesure d'audience.
+---
+
+<div id="cookie-consent" class="cookie-consent" hidden>
+  <p>
+    Ce site utilise des cookies de mesure d'audience pour comprendre comment il est utilisé. Vous
+    pouvez accepter ou refuser leur dépôt.
+  </p>
+  <div class="cookie-consent__actions">
+    <button type="button" data-consent="denied">Refuser</button>
+    <button type="button" data-consent="granted" class="cookie-consent__accept">Accepter</button>
+  </div>
+</div>
+
+<script>
+  const banner = document.getElementById('cookie-consent');
+
+  if (banner && !localStorage.getItem('cookie-consent')) {
+    banner.hidden = false;
+  }
+
+  banner?.addEventListener('click', (event) => {
+    if (!(event.target instanceof Element)) return;
+    const button = event.target.closest('button[data-consent]');
+    if (!(button instanceof HTMLButtonElement)) return;
+
+    const consent = button.dataset.consent === 'granted' ? 'granted' : 'denied';
+    localStorage.setItem('cookie-consent', consent);
+    window.dispatchEvent(new CustomEvent('cookie-consent-changed', { detail: consent }));
+    banner.hidden = true;
+  });
+</script>
+
+<style>
+  .cookie-consent {
+    position: fixed;
+    inset-inline: 1rem;
+    bottom: 1rem;
+    z-index: 100;
+    max-width: 32rem;
+    margin-inline: auto;
+  }
+
+  .cookie-consent:not([hidden]) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 20px rgba(43, 38, 33, 0.16);
+  }
+
+  .cookie-consent p {
+    margin: 0;
+    flex: 1 1 16rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .cookie-consent__actions {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .cookie-consent button {
+    padding: 0.5em 1.1em;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    background: transparent;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--color-text);
+  }
+
+  .cookie-consent__accept {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-primary-contrast);
+  }
+</style>

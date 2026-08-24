@@ -54,21 +54,75 @@ directory `dist`):
 
 ## SEO
 
-The site includes a few baseline SEO optimizations:
+The site includes a fairly complete set of SEO optimizations:
 
 - **Sitemap**: [`@astrojs/sitemap`](astro.config.mjs) integration + the site's
   canonical URL declared (`site:`) → automatically generates `/sitemap-index.xml`
-  at build time.
-- **robots.txt**: [`public/robots.txt`](public/robots.txt) allows indexing and
-  references the sitemap.
+  at build time, with `lastmod` on blog articles (read from their frontmatter
+  `date`).
+- **robots.txt**: generated at [`src/pages/robots.txt.ts`](src/pages/robots.txt.ts)
+  from `Astro.site`, so it can never drift from the domain configured in
+  `astro.config.mjs`.
 - **Per-page tags** (via [`BaseLayout.astro`](src/layouts/BaseLayout.astro)):
-  dynamic `<title>`, meta description, canonical URL, Open Graph and Twitter Card
-  (switches to `summary_large_image` as soon as an image is provided).
+  dynamic `<title>`, meta description, canonical URL, Open Graph and Twitter
+  Card. Every page always has a share image: the page's own image if provided,
+  otherwise the site's hero photo, cropped to the standard 1200×630 OG size at
+  build time via `astro:assets`.
+- **Real, optimized images**: photos live in [`src/assets/images/`](src/assets/images)
+  and go through Astro's `<Image>` component — responsive `srcset`, modern
+  formats, explicit dimensions (no layout shift), descriptive `alt` text, and
+  `priority` loading on the largest above-the-fold image per page.
 - **JSON-LD structured data**:
   - schema.org `SportsActivityLocation` on every page (address, phone,
-    geolocation, opening hours)
+    geolocation, opening hours, `sameAs` linking Facebook/Instagram)
   - schema.org `BlogPosting` on every article
+  - schema.org `BreadcrumbList` on every page below the homepage, backed by a
+    visible breadcrumb trail ([`Breadcrumbs.astro`](src/components/Breadcrumbs.astro))
+- **Content architecture**: blog articles are grouped under
+  `/blog/categorie/<categorie>/` archive pages, cross-linked from every
+  category badge, for internal linking and topical grouping.
+- **RSS feed**: [`/rss.xml`](src/pages/rss.xml.ts), linked from the document
+  `<head>`.
 - **Heading hierarchy**: [`SectionHeading`](src/components/SectionHeading.astro)
   accepts an `as="h1" | "h2"` prop to guarantee a single real `<h1>` per page.
-- **Per-article share image**: optional `image` field on the `blog` collection
-  ([`src/content.config.ts`](src/content.config.ts)) to illustrate social shares.
+- **Self-hosted fonts**: Fraunces and Source Sans 3 ship via
+  [Fontsource](https://fontsource.org/) instead of the Google Fonts CDN, removing
+  a third-party render-blocking request.
+
+## SEO — next steps
+
+Not done yet — worth revisiting once the business has real content:
+
+- **Link a Google Business Profile** (formerly "Google My Business", created at
+  [business.google.com](https://business.google.com)) once it exists:
+  - Use the *exact* same name/address/phone as [`src/data/site.ts`](src/data/site.ts)
+    on the profile (NAP consistency between the site and the profile matters for
+    local SEO).
+  - Fill in the profile's "Website" field with the site's URL.
+  - Add the profile's public URL (its Maps link or `g.page/...` short link) to
+    the `sameAs` array in the `SportsActivityLocation` JSON-LD in
+    [`BaseLayout.astro`](src/layouts/BaseLayout.astro), next to Facebook/Instagram.
+  - Reviews live on the Google Business Profile itself (Maps / knowledge panel),
+    not on the site — that's what actually shows star ratings in local search
+    results.
+  - ⚠️ **Don't add `AggregateRating`/`Review` schema to the site's own
+    `SportsActivityLocation` expecting star rich results in web search.** Per
+    [Google's review-snippet guidelines](https://developers.google.com/search/docs/appearance/structured-data/review-snippet):
+    *"If the entity that's being reviewed controls the reviews about itself,
+    their pages that use `LocalBusiness` or any other type of `Organization`
+    structured data are ineligible for the star review feature."* Self-serving
+    ratings on your own domain are excluded — only the Business Profile's own
+    reviews count. The most a site can legitimately do is display real
+    testimonials as visible text, linking back to the Google profile as the
+    source.
+
+## Analytics (optional)
+
+Google Analytics 4 is wired up but **off by default**. Set `PUBLIC_GA_ID` (see
+[`.env.example`](.env.example)) to a real GA4 measurement ID to enable it.
+
+Because this is a French site, GA is gated behind a consent banner
+([`CookieConsent.astro`](src/components/CookieConsent.astro)): the tracking
+script ([`Analytics.astro`](src/components/Analytics.astro)) never loads until
+the visitor accepts. Nothing is requested from Google before that click, and
+the banner itself doesn't render at all when `PUBLIC_GA_ID` is unset.

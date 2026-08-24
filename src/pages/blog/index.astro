@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogCard from '../../components/BlogCard.astro';
 import SectionHeading from '../../components/SectionHeading.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
@@ -15,6 +16,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 >
   <section class="section">
     <div class="container">
+      <Breadcrumbs items={[{ label: 'Actualités', href: '/blog' }]} />
       <SectionHeading
         as="h1"
         eyebrow="Actualités"
@@ -31,6 +33,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
               date={post.data.date}
               category={post.data.category}
               cover={post.data.cover}
+              coverAlt={post.data.coverAlt}
             />
           ))
         }
