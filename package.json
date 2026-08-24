@@ -2,6 +2,7 @@
   "name": "tutoriel",
   "type": "module",
   "version": "0.0.1",
+  "packageManager": "pnpm@11.0.9",
   "engines": {
     "node": ">=22.12.0"
   },
@@ -9,7 +10,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "eslint .",
+    "prepare": "husky"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
@@ -21,6 +24,23 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "typescript": "^6.0.3"
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.9.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-astro": "^3.1.0",
+    "globals": "^17.11.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.3.0",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.67.0"
+  },
+  "lint-staged": {
+    "{eslint.config.js,prettier.config.mjs,astro.config.mjs,src/**/*.{ts,astro}}": [
+      "eslint --fix --max-warnings=0",
+      "prettier --write"
+    ],
+    "{package.json,tsconfig.json,src/**/*.css,**/*.md,**/*.yml,**/*.yaml}": "prettier --write"
   }
 }

@@ -1,7 +1,8 @@
 ---
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
-import CategoryBadge, { type BlogCategory } from './CategoryBadge.astro';
+import CategoryBadge from './CategoryBadge.astro';
+import type { BlogCategory } from '../data/blogCategories';
 
 interface Props {
   href: string;
@@ -13,7 +14,8 @@ interface Props {
   coverAlt: string;
 }
 
-const { href, title, description, date, category, cover, coverAlt } = Astro.props;
+const { href, title, description, date, category, cover, coverAlt } =
+  Astro.props;
 
 const formattedDate = new Intl.DateTimeFormat('fr-FR', {
   day: 'numeric',
@@ -24,11 +26,19 @@ const formattedDate = new Intl.DateTimeFormat('fr-FR', {
 
 <article class="blog-card">
   <a href={href} class="blog-card__image-link" tabindex="-1" aria-hidden="true">
-    <Image src={cover} alt={coverAlt} width={800} height={500} class="blog-card__image" />
+    <Image
+      src={cover}
+      alt={coverAlt}
+      width={800}
+      height={500}
+      class="blog-card__image"
+    />
   </a>
   <div class="blog-card__body">
     <div class="blog-card__meta">
-      <a href={`/blog/categorie/${category}/`} class="blog-card__category"><CategoryBadge category={category} /></a>
+      <a href={`/blog/categorie/${category}/`} class="blog-card__category"
+        ><CategoryBadge category={category} /></a
+      >
       <time datetime={date.toISOString()}>{formattedDate}</time>
     </div>
     <h3><a href={href}>{title}</a></h3>

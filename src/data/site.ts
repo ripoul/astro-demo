@@ -48,9 +48,10 @@ const DAY_ORDER = Object.keys(DAY_NAMES_FR_TO_EN);
 function frDayRangeToSchemaOrg(dayRange: string): string[] {
   const [start, end] = dayRange.split('–').map((day) => day.trim());
   if (!end) return [DAY_NAMES_FR_TO_EN[start]];
-  return DAY_ORDER.slice(DAY_ORDER.indexOf(start), DAY_ORDER.indexOf(end) + 1).map(
-    (day) => DAY_NAMES_FR_TO_EN[day],
-  );
+  return DAY_ORDER.slice(
+    DAY_ORDER.indexOf(start),
+    DAY_ORDER.indexOf(end) + 1,
+  ).map((day) => DAY_NAMES_FR_TO_EN[day]);
 }
 
 function frTimeToSchemaOrg(time: string): string {
@@ -60,7 +61,9 @@ function frTimeToSchemaOrg(time: string): string {
 
 // Horaires au format schema.org, utilisés par le JSON-LD LocalBusiness dans BaseLayout.
 export const OPENING_HOURS_SCHEMA = SITE.hours.map((slot) => {
-  const [opens, closes] = slot.time.split('–').map((time) => frTimeToSchemaOrg(time));
+  const [opens, closes] = slot.time
+    .split('–')
+    .map((time) => frTimeToSchemaOrg(time));
   return {
     '@type': 'OpeningHoursSpecification' as const,
     dayOfWeek: frDayRangeToSchemaOrg(slot.day),

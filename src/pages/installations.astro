@@ -14,10 +14,15 @@ const FACILITIES = [
   {
     title: 'Manège couvert',
     description:
-      "Un manège couvert idéal pour travailler par tous les temps et accueillir les cours collectifs.",
+      'Un manège couvert idéal pour travailler par tous les temps et accueillir les cours collectifs.',
     image: manegeImage,
     imageAlt: 'Manège couvert avec sol en sable et cavalier au trot',
-    details: ['20 × 40 m', 'Sol en sable fibré', 'Éclairage LED', 'Miroirs muraux'],
+    details: [
+      '20 × 40 m',
+      'Sol en sable fibré',
+      'Éclairage LED',
+      'Miroirs muraux',
+    ],
   },
   {
     title: 'Carrière extérieure',
@@ -25,12 +30,16 @@ const FACILITIES = [
       'Une grande carrière extérieure, parfaite pour le travail sur le plat comme pour les séances de sauts.',
     image: carriereImage,
     imageAlt: 'Carrière extérieure avec des obstacles installés',
-    details: ['40 × 60 m', 'Sol sable-fibre drainant', "Parcours d'obstacles modulables"],
+    details: [
+      '40 × 60 m',
+      'Sol sable-fibre drainant',
+      "Parcours d'obstacles modulables",
+    ],
   },
   {
     title: 'Rond de longe',
     description:
-      'Un espace pour le travail à pied, la mise en confiance des jeunes chevaux et l\'échauffement avant les reprises.',
+      "Un espace pour le travail à pied, la mise en confiance des jeunes chevaux et l'échauffement avant les reprises.",
     image: rondDeLongeImage,
     imageAlt: 'Rond de longe avec un cheval longé',
     details: ['18 m de diamètre', 'Sol souple', 'Parois pleines sécurisantes'],
@@ -41,7 +50,11 @@ const FACILITIES = [
       'Des aires de pansage couvertes et équipées, pour préparer votre cheval dans le calme avant chaque séance.',
     image: pansageImage,
     imageAlt: "Zone de pansage couverte avec plusieurs postes d'attache",
-    details: ['6 postes couverts', 'Douche chauffante', 'Rangements individuels'],
+    details: [
+      '6 postes couverts',
+      'Douche chauffante',
+      'Rangements individuels',
+    ],
   },
   {
     title: 'Boxes & prés',
@@ -57,7 +70,11 @@ const FACILITIES = [
       'Une sellerie commune et des casiers individuels sécurisés pour ranger selles, licols et matériel.',
     image: sellerieImage,
     imageAlt: 'Sellerie avec des selles rangées sur leurs supports',
-    details: ['Casiers individuels', 'Local couvertures', 'Point entretien du matériel'],
+    details: [
+      'Casiers individuels',
+      'Local couvertures',
+      'Point entretien du matériel',
+    ],
   },
 ];
 ---
@@ -68,7 +85,9 @@ const FACILITIES = [
 >
   <section class="section">
     <div class="container">
-      <Breadcrumbs items={[{ label: 'Installations', href: '/installations' }]} />
+      <Breadcrumbs
+        items={[{ label: 'Installations', href: '/installations' }]}
+      />
       <SectionHeading
         as="h1"
         eyebrow="Les installations"

@@ -17,13 +17,22 @@ const SUBJECTS = [
     </div>
     <div class="contact-form__field">
       <label for="email">Email</label>
-      <input type="email" id="email" name="email" autocomplete="email" required />
+      <input
+        type="email"
+        id="email"
+        name="email"
+        autocomplete="email"
+        required
+      />
     </div>
   </div>
 
   <div class="contact-form__row">
     <div class="contact-form__field">
-      <label for="phone">Téléphone <span class="contact-form__optional">(optionnel)</span></label>
+      <label for="phone"
+        >Téléphone <span class="contact-form__optional">(optionnel)</span
+        ></label
+      >
       <input type="tel" id="phone" name="phone" autocomplete="tel" />
     </div>
     <div class="contact-form__field">
@@ -45,14 +54,17 @@ const SUBJECTS = [
 <div class="toast" role="status" aria-atomic="true" hidden>
   <span class="toast__icon" aria-hidden="true"></span>
   <p class="toast__message"></p>
-  <button type="button" class="toast__close" aria-label="Fermer la notification">&times;</button>
+  <button type="button" class="toast__close" aria-label="Fermer la notification"
+    >&times;</button
+  >
 </div>
 
 <script>
   const form = document.querySelector<HTMLFormElement>('.contact-form');
   const toast = document.querySelector<HTMLDivElement>('.toast');
   const toastIcon = toast?.querySelector<HTMLSpanElement>('.toast__icon');
-  const toastMessage = toast?.querySelector<HTMLParagraphElement>('.toast__message');
+  const toastMessage =
+    toast?.querySelector<HTMLParagraphElement>('.toast__message');
   const toastClose = toast?.querySelector<HTMLButtonElement>('.toast__close');
 
   let toastTimeout: ReturnType<typeof setTimeout> | undefined;
@@ -88,7 +100,9 @@ const SUBJECTS = [
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const submitButton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const submitButton = form.querySelector<HTMLButtonElement>(
+      'button[type="submit"]',
+    );
     const formData = new FormData(form);
     const params = new URLSearchParams();
     formData.forEach((value, key) => params.append(key, String(value)));
@@ -108,9 +122,15 @@ const SUBJECTS = [
       if (!response.ok) throw new Error(`Request failed: ${response.status}`);
 
       form.reset();
-      showToast('Merci ! Votre message a bien été envoyé, nous vous répondons rapidement.', 'success');
-    } catch (error) {
-      showToast('Une erreur est survenue. Réessayez ou appelez-nous directement.', 'error');
+      showToast(
+        'Merci ! Votre message a bien été envoyé, nous vous répondons rapidement.',
+        'success',
+      );
+    } catch {
+      showToast(
+        'Une erreur est survenue. Réessayez ou appelez-nous directement.',
+        'error',
+      );
     } finally {
       if (submitButton) {
         submitButton.disabled = false;
@@ -152,7 +172,9 @@ const SUBJECTS = [
     box-shadow: var(--shadow-md);
     opacity: 0;
     transform: translateY(0.75rem);
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
     pointer-events: none;
   }
 

@@ -1,6 +1,6 @@
 ---
-title: "Stage exceptionnel en septembre avec un cavalier international"
-description: "Les Écuries du Vallon organisent un stage de dressage encadré par un cavalier de niveau international les 12 et 13 septembre. Places limitées, inscriptions ouvertes."
+title: 'Stage exceptionnel en septembre avec un cavalier international'
+description: 'Les Écuries du Vallon organisent un stage de dressage encadré par un cavalier de niveau international les 12 et 13 septembre. Places limitées, inscriptions ouvertes.'
 date: 2026-07-10
 category: stage
 cover: ../../assets/images/blog-stage-dressage.jpg
@@ -20,4 +20,4 @@ Grande nouvelle pour cette rentrée : nous accueillerons **[Nom du cavalier inte
 
 Le nombre de places est limité afin de garantir un suivi individuel de qualité. Les cavaliers du haras sont prioritaires jusqu'au 1ᵉʳ août, les demandes extérieures seront ensuite étudiées selon les places restantes.
 
-*Pour réserver votre place ou obtenir le tarif du stage, contactez-nous via notre [page contact](/contact).*
+_Pour réserver votre place ou obtenir le tarif du stage, contactez-nous via notre [page contact](/contact)._

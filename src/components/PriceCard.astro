@@ -18,7 +18,9 @@ const {
 } = Astro.props;
 ---
 
-<article class:list={['price-card', { 'price-card--highlighted': highlighted }]}>
+<article
+  class:list={['price-card', { 'price-card--highlighted': highlighted }]}
+>
   {highlighted && <p class="price-card__tag">Le plus choisi</p>}
   <h3>{title}</h3>
   <p class="price-card__description">{description}</p>
@@ -38,7 +40,8 @@ const {
     {features.map((feature) => <li>{feature}</li>)}
   </ul>
 
-  <a href="/contact" class="btn btn--ghost price-card__cta">Demander un devis</a>
+  <a href="/contact" class="btn btn--ghost price-card__cta">Demander un devis</a
+  >
 </article>
 
 <style>

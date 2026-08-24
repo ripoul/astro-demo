@@ -1,5 +1,5 @@
 ---
-title: "Beau podium régional pour nos couples au concours de CSO"
+title: 'Beau podium régional pour nos couples au concours de CSO'
 description: "Le week-end des 13 et 14 juin, plusieurs cavaliers du haras ont représenté Les Écuries du Vallon au concours régional de saut d'obstacles avec de belles performances à la clé."
 date: 2026-06-22
 category: resultats
@@ -13,4 +13,4 @@ Sur l'épreuve phare du dimanche, Sarah et son hongre Diamant signent un sans-fa
 
 Une belle vitrine pour le travail effectué à l'année sur notre carrière et notre rond de longe. Merci aux cavaliers et à leurs chevaux pour ce joli week-end sportif !
 
-*Vous souhaitez préparer les prochaines échéances avec nous ? Découvrez nos [cours d'équitation](/#services) ou nos [installations](/installations).*
+_Vous souhaitez préparer les prochaines échéances avec nous ? Découvrez nos [cours d'équitation](/#services) ou nos [installations](/installations)._

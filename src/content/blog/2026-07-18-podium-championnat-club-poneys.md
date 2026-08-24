@@ -1,10 +1,10 @@
 ---
-title: "Podium au championnat club poneys : bravo à nos cavaliers !"
-description: "Trois cavaliers du club ont brillé lors du championnat régional des 12 et 13 juillet, avec deux podiums individuels et une belle médaille par équipe."
+title: 'Podium au championnat club poneys : bravo à nos cavaliers !'
+description: 'Trois cavaliers du club ont brillé lors du championnat régional des 12 et 13 juillet, avec deux podiums individuels et une belle médaille par équipe.'
 date: 2026-07-18
 category: resultats
 cover: ../../assets/images/blog-championnat-poneys.jpg
-coverAlt: "Groupe de cavaliers du club avec leurs rosettes devant le manège"
+coverAlt: 'Groupe de cavaliers du club avec leurs rosettes devant le manège'
 ---
 
 Le week-end des 12 et 13 juillet, nos cavaliers du club se sont déplacés pour le championnat régional poneys, et le résultat est à la hauteur de leurs efforts cette saison !
@@ -13,4 +13,4 @@ En individuel, Camille et son poney Câlin décrochent la **2ᵉ place** en épr
 
 Un immense bravo à tous les cavaliers engagés ce week-end, ainsi qu'à leurs familles pour le soutien logistique (et les kilomètres de van !). Rendez-vous est pris pour la prochaine étape à la rentrée.
 
-*Envie de rejoindre le club et de viser les prochains podiums ? Direction notre page [tarifs](/tarifs) ou notre [page contact](/contact).*
+_Envie de rejoindre le club et de viser les prochains podiums ? Direction notre page [tarifs](/tarifs) ou notre [page contact](/contact)._

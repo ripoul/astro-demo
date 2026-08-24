@@ -5,12 +5,14 @@
 
 <div id="cookie-consent" class="cookie-consent" hidden>
   <p>
-    Ce site utilise des cookies de mesure d'audience pour comprendre comment il est utilisé. Vous
-    pouvez accepter ou refuser leur dépôt.
+    Ce site utilise des cookies de mesure d'audience pour comprendre comment il
+    est utilisé. Vous pouvez accepter ou refuser leur dépôt.
   </p>
   <div class="cookie-consent__actions">
     <button type="button" data-consent="denied">Refuser</button>
-    <button type="button" data-consent="granted" class="cookie-consent__accept">Accepter</button>
+    <button type="button" data-consent="granted" class="cookie-consent__accept"
+      >Accepter</button
+    >
   </div>
 </div>
 
@@ -28,7 +30,9 @@
 
     const consent = button.dataset.consent === 'granted' ? 'granted' : 'denied';
     localStorage.setItem('cookie-consent', consent);
-    window.dispatchEvent(new CustomEvent('cookie-consent-changed', { detail: consent }));
+    window.dispatchEvent(
+      new CustomEvent('cookie-consent-changed', { detail: consent }),
+    );
     banner.hidden = true;
   });
 </script>

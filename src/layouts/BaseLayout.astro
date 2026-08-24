@@ -19,7 +19,10 @@ interface Props {
 
 const { title, description = SITE.description, image } = Astro.props;
 const pageTitle = title === SITE.name ? SITE.name : `${title} · ${SITE.name}`;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+const canonicalURL = new URL(
+  Astro.url.pathname,
+  Astro.site ?? Astro.url.origin,
+);
 
 // Toujours une image de partage : celle de la page si fournie, sinon la photo
 // du haras, recadrée au format standard Open Graph (1200×630).
@@ -29,7 +32,10 @@ const ogImage = await getImage({
   height: 630,
   format: 'jpg',
 });
-const ogImageURL = new URL(ogImage.src, Astro.site ?? Astro.url.origin).toString();
+const ogImageURL = new URL(
+  ogImage.src,
+  Astro.site ?? Astro.url.origin,
+).toString();
 
 const localBusinessSchema = {
   '@context': 'https://schema.org',
@@ -75,9 +81,17 @@ const localBusinessSchema = {
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImageURL} />
 
-    <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={SITE.name}
+      href="/rss.xml"
+    />
 
-    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(localBusinessSchema)}
+    />
     <slot name="head" />
   </head>
   <body>

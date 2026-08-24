@@ -1,5 +1,5 @@
 ---
-title: "Retour sur notre journée portes ouvertes"
+title: 'Retour sur notre journée portes ouvertes'
 description: "Ateliers, démonstrations et pension d'un après-midi : merci à toutes les familles venues découvrir le haras lors de notre journée portes ouvertes du 24 mai."
 date: 2026-05-30
 category: actualite
@@ -13,4 +13,4 @@ Au programme : visite guidée du manège, de la carrière et de la zone de pansa
 
 Merci à toutes les familles présentes, ainsi qu'aux cavaliers du club venus prêter main-forte pour l'occasion. Vu le succès de cette édition, une prochaine journée portes ouvertes est déjà à l'étude pour l'année prochaine.
 
-*Une question sur nos services en attendant ? Rendez-vous sur notre [page contact](/contact).*
+_Une question sur nos services en attendant ? Rendez-vous sur notre [page contact](/contact)._

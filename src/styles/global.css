@@ -16,7 +16,8 @@
   --color-accent-dark: #96601f;
 
   --font-heading: 'Fraunces Variable', 'Georgia', serif;
-  --font-body: 'Source Sans 3 Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body:
+    'Source Sans 3 Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --container-width: 72rem;
   --radius-sm: 6px;
@@ -171,7 +172,11 @@ main {
   font-weight: 600;
   text-decoration: none;
   border: 2px solid transparent;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease;
   cursor: pointer;
   font-size: 1rem;
 }

@@ -1,20 +1,16 @@
 ---
-export type BlogCategory = 'resultats' | 'stage' | 'actualite';
+import { CATEGORY_LABELS, type BlogCategory } from '../data/blogCategories';
 
 interface Props {
   category: BlogCategory;
 }
 
-export const CATEGORY_LABELS: Record<BlogCategory, string> = {
-  resultats: 'Résultats',
-  stage: 'Stage',
-  actualite: 'Actualité',
-};
-
 const { category } = Astro.props;
 ---
 
-<span class:list={['badge', `badge--${category}`]}>{CATEGORY_LABELS[category]}</span>
+<span class:list={['badge', `badge--${category}`]}
+  >{CATEGORY_LABELS[category]}</span
+>
 
 <style>
   .badge {

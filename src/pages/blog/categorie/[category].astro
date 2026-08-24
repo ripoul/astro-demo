@@ -4,7 +4,10 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import BlogCard from '../../../components/BlogCard.astro';
 import SectionHeading from '../../../components/SectionHeading.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
-import { CATEGORY_LABELS, type BlogCategory } from '../../../components/CategoryBadge.astro';
+import {
+  CATEGORY_LABELS,
+  type BlogCategory,
+} from '../../../data/blogCategories';
 import { SITE } from '../../../data/site';
 
 export async function getStaticPaths() {
@@ -31,7 +34,10 @@ const { category, posts } = Astro.props;
 const label = CATEGORY_LABELS[category];
 ---
 
-<BaseLayout title={label} description={`Articles de la catégorie ${label} : ${SITE.description}`}>
+<BaseLayout
+  title={label}
+  description={`Articles de la catégorie ${label} : ${SITE.description}`}
+>
   <section class="section">
     <div class="container">
       <Breadcrumbs

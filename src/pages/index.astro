@@ -13,7 +13,7 @@ const SERVICES = [
     icon: '🐎',
     title: 'Pension équestre (pré & box)',
     description:
-      "Un hébergement adapté à chaque cheval, du pré collectif au box individuel, avec soins quotidiens assurés par notre équipe.",
+      'Un hébergement adapté à chaque cheval, du pré collectif au box individuel, avec soins quotidiens assurés par notre équipe.',
   },
   {
     icon: '🎓',
@@ -56,7 +56,9 @@ const SERVICES = [
         <h1>{SITE.name}</h1>
         <p class="hero__tagline">{SITE.tagline}</p>
         <div class="hero__actions">
-          <Button href="/installations" variant="primary">Découvrir les installations</Button>
+          <Button href="/installations" variant="primary"
+            >Découvrir les installations</Button
+          >
           <Button href="/contact" variant="secondary">Nous contacter</Button>
         </div>
       </div>
@@ -77,10 +79,12 @@ const SERVICES = [
   <section class="section">
     <div class="container intro">
       <p>
-        Nichées au calme et entourées de chemins de promenade, <strong>{SITE.name}</strong> accueillent
-        les chevaux de propriétaires en pension pré ou box, dans un cadre pensé pour leur
-        bien-être. Cours d'équitation, stages et installations complètes permettent à chacun,
-        cavalier débutant ou confirmé, de progresser à son rythme aux côtés de son cheval.
+        Nichées au calme et entourées de chemins de promenade, <strong
+          >{SITE.name}</strong
+        > accueillent les chevaux de propriétaires en pension pré ou box, dans un
+        cadre pensé pour leur bien-être. Cours d'équitation, stages et installations
+        complètes permettent à chacun, cavalier débutant ou confirmé, de progresser
+        à son rythme aux côtés de son cheval.
       </p>
     </div>
   </section>
@@ -111,21 +115,30 @@ const SERVICES = [
           <h3>Adresse</h3>
           <address>
             {SITE.address.line1}<br />
-            {SITE.address.postalCode} {SITE.address.city}
+            {SITE.address.postalCode}
+            {SITE.address.city}
           </address>
 
           <h3>Horaires</h3>
           <ul class="location__hours">
             {
               SITE.hours.map((slot) => (
-                <li><span>{slot.day}</span><span>{slot.time}</span></li>
+                <li>
+                  <>
+                    <span>{slot.day}</span>
+                    <span>{slot.time}</span>
+                  </>
+                </li>
               ))
             }
           </ul>
 
           <Button href="/contact" variant="ghost">Planifier une visite</Button>
         </div>
-        <MapEmbed src={SITE.map.embedSrc} title="Carte de localisation du haras" />
+        <MapEmbed
+          src={SITE.map.embedSrc}
+          title="Carte de localisation du haras"
+        />
       </div>
     </div>
   </section>

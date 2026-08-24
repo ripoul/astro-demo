@@ -14,7 +14,13 @@ const { title, description, image, imageAlt, details = [] } = Astro.props;
 ---
 
 <article class="facility-card">
-  <Image src={image} alt={imageAlt} width={800} height={600} class="facility-card__image" />
+  <Image
+    src={image}
+    alt={imageAlt}
+    width={800}
+    height={600}
+    class="facility-card__image"
+  />
   <div class="facility-card__body">
     <h3>{title}</h3>
     <p>{description}</p>

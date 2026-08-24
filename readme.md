@@ -16,12 +16,12 @@ domain name...) is fictional — see [`src/data/site.ts`](src/data/site.ts).
 
 All commands are run from the root of the project:
 
-| Command         | Action                                                                                     |
-| :--------------- | :------------------------------------------------------------------------------------------ |
-| `pnpm install`  | Installs the project's dependencies.                                                       |
-| `pnpm dev`      | Starts the local dev server (with hot reload) at `localhost:4321`.                          |
-| `pnpm build`    | Builds the static production site into `./dist/` — this is the folder Netlify deploys.      |
-| `pnpm preview`  | Serves the contents of `./dist/` locally, to check the production build before deploying.   |
+| Command        | Action                                                                                    |
+| :------------- | :---------------------------------------------------------------------------------------- |
+| `pnpm install` | Installs the project's dependencies.                                                      |
+| `pnpm dev`     | Starts the local dev server (with hot reload) at `localhost:4321`.                        |
+| `pnpm build`   | Builds the static production site into `./dist/` — this is the folder Netlify deploys.    |
+| `pnpm preview` | Serves the contents of `./dist/` locally, to check the production build before deploying. |
 
 ## Hosting — Netlify
 
@@ -95,7 +95,7 @@ Not done yet — worth revisiting once the business has real content:
 
 - **Link a Google Business Profile** (formerly "Google My Business", created at
   [business.google.com](https://business.google.com)) once it exists:
-  - Use the *exact* same name/address/phone as [`src/data/site.ts`](src/data/site.ts)
+  - Use the _exact_ same name/address/phone as [`src/data/site.ts`](src/data/site.ts)
     on the profile (NAP consistency between the site and the profile matters for
     local SEO).
   - Fill in the profile's "Website" field with the site's URL.
@@ -108,9 +108,9 @@ Not done yet — worth revisiting once the business has real content:
   - ⚠️ **Don't add `AggregateRating`/`Review` schema to the site's own
     `SportsActivityLocation` expecting star rich results in web search.** Per
     [Google's review-snippet guidelines](https://developers.google.com/search/docs/appearance/structured-data/review-snippet):
-    *"If the entity that's being reviewed controls the reviews about itself,
+    _"If the entity that's being reviewed controls the reviews about itself,
     their pages that use `LocalBusiness` or any other type of `Organization`
-    structured data are ineligible for the star review feature."* Self-serving
+    structured data are ineligible for the star review feature."_ Self-serving
     ratings on your own domain are excluded — only the Business Profile's own
     reviews count. The most a site can legitimately do is display real
     testimonials as visible text, linking back to the Google profile as the
