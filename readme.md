@@ -52,6 +52,64 @@ directory `dist`):
    Notifications → Emails and webhooks → Form submission notifications** (or
    install the official Slack app) and add at least one email notification.
 
+## Content management — Decap CMS
+
+Blog posts can be written and edited from a browser at **`/admin`**
+([`src/pages/admin.html`](src/pages/admin.html) +
+[`public/admin/config.yml`](public/admin/config.yml)) instead of hand-editing
+markdown files, via [Decap CMS](https://decapcms.org/). Runs in **editorial
+workflow** mode (`publish_mode: editorial_workflow`): saving an entry opens a
+branch + Pull Request against `main` on `ripoul/astro-demo` instead of
+committing directly — nothing reaches production until that PR is merged
+(from the CMS's own workflow board, or from GitHub directly). Since the repo
+is already connected to Netlify, each PR should get its own **Deploy
+Preview** — a full, real, unlisted build of the site with that draft included,
+which is what stands in for an "admin-only preview" here (there's no
+authentication on the built pages themselves — it's a static site — so
+nothing reaches `main` until the PR is merged, which is the only real gate).
+This also means CMS-authored changes go through the same `lint.yml`/`build.yml`
+CI checks as any other PR before they can be merged.
+
+Decap needs a backend to do the GitHub OAuth handshake (browser JS can't hold
+an OAuth client secret). Netlify Identity + Git Gateway would be the
+zero-setup option since the site is already on Netlify, but Netlify has
+deprecated Git Gateway for new setups — so this uses a small **Cloudflare
+Worker OAuth proxy** instead, kept as its own repo:
+[`ripoul/astro-demo-decap-proxy`](https://github.com/ripoul/astro-demo-decap-proxy)
+(forked from [decap-proxy](https://github.com/sterlingwes/decap-proxy), the
+proxy Decap's own docs reference). Kept separate from this repo because that
+template has no LICENSE (its `is_template` flag signals "use this template",
+not "vendor this code") and because its TypeScript/Vitest/Wrangler toolchain
+shouldn't mix with this repo's ESLint/Prettier setup. Runs entirely on
+Cloudflare's free tier — doesn't touch Netlify's usage/credits at all.
+
+Current values: Worker at `https://decap-proxy.ripoul.workers.dev`, no CI
+auto-deploy on that repo (deemed not worth it for how rarely it changes) — any
+change to it needs a manual redeploy:
+
+```bash
+npx wrangler deploy
+```
+
+(from inside the `astro-demo-decap-proxy` checkout — secrets set via
+`wrangler secret put` apply immediately without this, but `wrangler.toml`
+edits need it).
+
+**Access control**: the GitHub OAuth login itself is open to anyone with a
+GitHub account, but _saving_ requires that account to actually have
+collaborator/push access on `ripoul/astro-demo` — GitHub's own repo
+permissions are the real gate, not the login screen. Manage who can publish
+under this repo's **Settings → Collaborators**.
+
+### Setting this up again on another project
+
+1. Create a **new** GitHub OAuth App per project (`github.com/settings/applications/new`) — one App = one callback URL = one site, don't reuse an existing one.
+2. Use [`sterlingwes/decap-proxy`](https://github.com/sterlingwes/decap-proxy)'s "Use this template" button to create a dedicated repo for the proxy (never copy its source into the site's own repo).
+3. `cp wrangler.toml.sample wrangler.toml`, set `name`, leave `GITHUB_REPO_PRIVATE = "0"` unless the site's repo is private.
+4. `npx wrangler login`, then `npx wrangler secret put GITHUB_OAUTH_ID` / `GITHUB_OAUTH_SECRET` with the values from step 1.
+5. `npx wrangler deploy`, confirm `Hello 👋` at the printed URL.
+6. Point the new site's `public/admin/config.yml` `backend.base_url` at that URL and `backend.repo` at the right `owner/repo`.
+
 ## SEO
 
 The site includes a fairly complete set of SEO optimizations:

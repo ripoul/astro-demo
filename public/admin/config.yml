@@ -1,0 +1,70 @@
+backend:
+  name: github
+  repo: ripoul/astro-demo
+  branch: main
+  base_url: https://decap-proxy.ripoul.workers.dev
+  auth_endpoint: /auth
+
+# Chaque entrée passe par une branche + une Pull Request (visible dans l'onglet
+# "Workflow éditorial" du CMS) au lieu d'un commit direct sur `main` : rien ne
+# part en prod tant que la PR n'est pas mergée. Comme le repo est déjà branché
+# sur Netlify, chaque PR obtient normalement sa propre Deploy Preview — c'est
+# elle qui sert d'aperçu "avant publication".
+publish_mode: editorial_workflow
+
+locale: fr
+
+media_folder: src/assets/images
+public_folder: /src/assets/images
+
+collections:
+  - name: blog
+    label: 'Articles de blog'
+    label_singular: 'Article'
+    folder: src/content/blog
+    create: true
+    delete: true
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    extension: md
+    format: frontmatter
+    media_folder: '../../assets/images'
+    public_folder: '../../assets/images'
+    fields:
+      - { label: 'Titre', name: title, widget: string }
+      - {
+          label: 'Description',
+          name: description,
+          widget: text,
+          hint: 'Sert de meta description (SEO).',
+        }
+      - {
+          label: 'Date de publication',
+          name: date,
+          widget: datetime,
+          format: 'YYYY-MM-DD',
+          time_format: false,
+          picker_utc: true,
+        }
+      - label: 'Catégorie'
+        name: category
+        widget: select
+        options:
+          - { label: 'Résultats', value: resultats }
+          - { label: 'Stage', value: stage }
+          - { label: 'Actualité', value: actualite }
+      - {
+          label: 'Image de couverture',
+          name: cover,
+          widget: image,
+          choose_url: false,
+          hint: "Sert aussi d'image de partage (og:image / twitter:image).",
+        }
+      - { label: "Texte alternatif de l'image", name: coverAlt, widget: string }
+      - {
+          label: 'Brouillon',
+          name: draft,
+          widget: boolean,
+          default: false,
+          hint: 'À part pour dépublier un article existant, laisse décoché : le workflow éditorial (PR + Deploy Preview) sert déjà de garde-fou avant publication.',
+        }
+      - { label: 'Contenu', name: body, widget: markdown }
