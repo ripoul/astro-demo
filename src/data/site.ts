@@ -31,6 +31,14 @@ export const SITE = {
     lat: 48.6427,
     lng: 1.8305,
   },
+  // Identité légale fictive de la société éditrice (mentions-legales.astro) :
+  // à remplacer par les vraies mentions avant toute mise en ligne réelle.
+  legal: {
+    legalForm: 'SARL au capital de 10 000 €',
+    siret: '123 456 789 00012',
+    rcs: 'RCS Melun 123 456 789',
+    publicationDirector: 'Camille Dubreuil (gérante)',
+  },
 } as const;
 
 const DAY_NAMES_FR_TO_EN: Record<string, string> = {

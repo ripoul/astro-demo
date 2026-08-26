@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { SITE } from '../data/site';
+---
+
+<BaseLayout
+  title="Mentions légales"
+  description="Mentions légales du site : éditeur, directeur de la publication et hébergeur."
+>
+  <section class="section">
+    <div class="container legal-container">
+      <Breadcrumbs
+        items={[{ label: 'Mentions légales', href: '/mentions-legales' }]}
+      />
+      <SectionHeading
+        as="h1"
+        eyebrow="Informations légales"
+        title="Mentions légales"
+      />
+
+      <p class="legal-notice">
+        ⚠️ Ce site est un projet de démonstration technique : les informations
+        d'identité de l'éditeur ci-dessous (raison sociale, SIRET, dirigeant…)
+        sont fictives, à l'image des autres coordonnées du haras (voir <code
+          >src/data/site.ts</code
+        >).
+      </p>
+
+      <div class="legal-content">
+        <h2>Éditeur du site</h2>
+        <p>
+          {SITE.name}, {SITE.legal.legalForm}.<br />
+          Siège social : {SITE.address.full}.<br />
+          SIRET : {SITE.legal.siret} — {SITE.legal.rcs}.<br />
+          Directeur de la publication : {SITE.legal.publicationDirector}.
+        </p>
+        <p>
+          Contact : <a href={`mailto:${SITE.email}`}>{SITE.email}</a> · <a
+            href={SITE.phoneHref}>{SITE.phone}</a
+          >
+        </p>
+
+        <h2>Hébergement</h2>
+        <p>
+          Ce site est hébergé par <strong>Netlify, Inc.</strong>, société basée
+          à San Francisco (Californie, États-Unis). Coordonnées et mentions
+          légales complètes de l'hébergeur : <a
+            href="https://www.netlify.com/legal/">www.netlify.com/legal</a
+          >.
+        </p>
+
+        <h2>Propriété intellectuelle</h2>
+        <p>
+          Sauf mention contraire, l'ensemble des textes, images et éléments
+          graphiques présents sur ce site appartiennent à {SITE.name} ou à leurs auteurs
+          respectifs. Toute reproduction ou réutilisation, totale ou partielle, est
+          interdite sans autorisation préalable.
+        </p>
+
+        <h2>Liens et contenus tiers</h2>
+        <p>
+          Certaines pages intègrent des contenus fournis par des services tiers
+          (carte Google Maps, liens vers Facebook et Instagram). Ces services
+          sont indépendants de l'éditeur, qui n'est pas responsable de leur
+          contenu ni de leurs pratiques en matière de données personnelles.
+        </p>
+
+        <h2>Crédits</h2>
+        <p>
+          Site conçu et développé avec <a href="https://astro.build">Astro</a>.
+          ⚠️ Crédits photographiques à compléter selon la source réelle des
+          visuels utilisés.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-container {
+    max-width: 44rem;
+  }
+
+  .legal-notice {
+    padding: 1rem 1.25rem;
+    margin-bottom: 2rem;
+    background: var(--color-surface-alt);
+    border-left: 4px solid var(--color-accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+  }
+
+  .legal-notice code {
+    font-size: 0.85em;
+  }
+
+  .legal-content h2 {
+    margin-top: 2em;
+  }
+
+  .legal-content p {
+    color: var(--color-text-muted);
+  }
+
+  .legal-content a {
+    color: var(--color-accent-dark);
+  }
+</style>

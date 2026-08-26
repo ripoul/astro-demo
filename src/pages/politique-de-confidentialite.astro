@@ -1,0 +1,209 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { SITE } from '../data/site';
+
+const analyticsEnabled = Boolean(import.meta.env.PUBLIC_GA_ID);
+---
+
+<BaseLayout
+  title="Politique de confidentialité"
+  description="Politique de confidentialité : données collectées, finalités, durées de conservation et vos droits."
+>
+  <section class="section">
+    <div class="container legal-container">
+      <Breadcrumbs
+        items={[
+          {
+            label: 'Politique de confidentialité',
+            href: '/politique-de-confidentialite',
+          },
+        ]}
+      />
+      <SectionHeading
+        as="h1"
+        eyebrow="Vie privée"
+        title="Politique de confidentialité"
+      />
+
+      <p class="legal-notice">
+        ⚠️ Ce site est un projet de démonstration technique. Cette page décrit
+        néanmoins le fonctionnement réel du site (formulaire de contact, mesure
+        d'audience) : elle sert de modèle à adapter, pas d'avis juridique.
+      </p>
+
+      <div class="legal-content">
+        <h2>Responsable du traitement</h2>
+        <p>
+          {SITE.name}, {SITE.address.full} — <a href={`mailto:${SITE.email}`}
+            >{SITE.email}</a
+          >.
+        </p>
+
+        <h2>Données collectées et finalités</h2>
+        <p>
+          <strong>Formulaire de contact.</strong> Lorsque vous remplissez le formulaire
+          de la page <a href="/contact">Contact</a>, nous collectons votre nom,
+          votre email et votre message ainsi que, lorsque vous les renseignez,
+          votre téléphone et le sujet de votre demande. Ces données sont
+          utilisées uniquement pour répondre à votre demande.
+        </p>
+        <p>
+          <strong>Mesure d'audience.</strong>{' '}
+          {
+            analyticsEnabled ? (
+              <>
+                Ce site utilise Google Analytics pour comprendre comment il est
+                utilisé (pages visitées, provenance, type d'appareil). Ces
+                cookies ne sont déposés qu'après votre consentement explicite
+                via le bandeau affiché en bas de page.
+              </>
+            ) : (
+              <>
+                Sur cette version du site, la mesure d'audience (Google
+                Analytics) est désactivée : aucune donnée de navigation n'est
+                collectée et aucun cookie de mesure d'audience n'est déposé.
+              </>
+            )
+          }
+        </p>
+
+        <h2>Base légale</h2>
+        <ul>
+          <li>
+            Formulaire de contact : intérêt légitime à répondre aux demandes qui
+            nous sont adressées.
+          </li>
+          <li>
+            Mesure d'audience : votre consentement, recueilli via le bandeau
+            cookies.
+          </li>
+        </ul>
+
+        <h2>Destinataires des données</h2>
+        <ul>
+          <li>
+            <strong>Netlify</strong> (hébergeur) : les soumissions du formulaire de
+            contact sont stockées dans le tableau de bord Netlify, accessible aux
+            seules personnes autorisées à administrer le site.
+          </li>
+          <li>
+            <strong>Google</strong> (si la mesure d'audience est activée) : Google
+            Ireland Limited / Google LLC traite les données de navigation dans le
+            cadre du Data Privacy Framework UE-États-Unis. Voir la <a
+              href="https://policies.google.com/privacy"
+              >politique de confidentialité de Google</a
+            >.
+          </li>
+        </ul>
+
+        <h2>Durée de conservation</h2>
+        <ul>
+          <li>
+            Messages du formulaire de contact : le temps nécessaire au
+            traitement de votre demande, puis jusqu'à 3 ans à compter du dernier
+            échange.
+          </li>
+          <li>
+            Données de mesure d'audience : durée paramétrée dans la propriété
+            Google Analytics (généralement 14 mois par défaut).
+          </li>
+          <li>
+            Votre choix concernant les cookies : mémorisé dans le stockage local
+            de votre navigateur, sans expiration automatique — vous pouvez le
+            modifier à tout moment (voir ci-dessous).
+          </li>
+        </ul>
+
+        <h2>Vos droits</h2>
+        <p>
+          Conformément au RGPD, vous disposez d'un droit d'accès, de
+          rectification, d'effacement, de limitation, d'opposition et de
+          portabilité sur vos données. Pour l'exercer, contactez-nous à <a
+            href={`mailto:${SITE.email}`}>{SITE.email}</a
+          >. Vous pouvez également introduire une réclamation auprès de la <a
+            href="https://www.cnil.fr">CNIL</a
+          >.
+        </p>
+
+        <h2>Cookies</h2>
+        <p>
+          Ce site n'utilise qu'un seul mécanisme de stockage local : la
+          mémorisation de votre choix (accepter/refuser) concernant la mesure
+          d'audience. Aucun cookie publicitaire ou traceur tiers n'est déposé.
+        </p>
+        {
+          analyticsEnabled && (
+            <p>
+              <button type="button" id="manage-cookies" class="btn btn--ghost">
+                Modifier mon choix concernant les cookies
+              </button>
+            </p>
+          )
+        }
+
+        <h2>Sécurité</h2>
+        <p>
+          Le site est diffusé exclusivement en HTTPS. Les données transmises via
+          le formulaire de contact sont chiffrées durant leur transport jusqu'à
+          l'hébergeur.
+        </p>
+
+        <h2>Modifications</h2>
+        <p>
+          Cette politique peut être mise à jour ; la version en ligne sur cette
+          page fait foi.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  document
+    .querySelector<HTMLButtonElement>('#manage-cookies')
+    ?.addEventListener('click', () => {
+      localStorage.removeItem('cookie-consent');
+      window.location.reload();
+    });
+</script>
+
+<style>
+  .legal-container {
+    max-width: 44rem;
+  }
+
+  .legal-notice {
+    padding: 1rem 1.25rem;
+    margin-bottom: 2rem;
+    background: var(--color-surface-alt);
+    border-left: 4px solid var(--color-accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+  }
+
+  .legal-content h2 {
+    margin-top: 2em;
+  }
+
+  .legal-content p,
+  .legal-content li {
+    color: var(--color-text-muted);
+  }
+
+  .legal-content ul {
+    list-style: disc;
+    padding-left: 1.4em;
+    margin-bottom: 1em;
+  }
+
+  .legal-content li {
+    margin-bottom: 0.5em;
+  }
+
+  .legal-content a {
+    color: var(--color-accent-dark);
+  }
+</style>

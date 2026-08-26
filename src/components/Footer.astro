@@ -32,7 +32,7 @@ const year = new Date().getFullYear();
       <h2 class="site-footer__title">Contact</h2>
       <address>
         {SITE.address.line1}<br />
-        {SITE.address.postalCode}
+        {SITE.address.postalCode}{' '}
         {SITE.address.city}<br />
         <a href={SITE.phoneHref}>{SITE.phone}</a><br />
         <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
@@ -58,6 +58,12 @@ const year = new Date().getFullYear();
 
   <div class="container site-footer__bottom">
     <p>&copy; {year} {SITE.name}. Site de démonstration réalisé avec Astro.</p>
+    <ul class="site-footer__legal">
+      <li><a href="/mentions-legales">Mentions légales</a></li>
+      <li>
+        <a href="/politique-de-confidentialite">Politique de confidentialité</a>
+      </li>
+    </ul>
   </div>
 </footer>
 
@@ -123,6 +129,10 @@ const year = new Date().getFullYear();
   }
 
   .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
     border-top: 1px solid rgba(255, 255, 255, 0.15);
     padding-block: 1.25rem;
     font-size: 0.85rem;
@@ -131,5 +141,11 @@ const year = new Date().getFullYear();
 
   .site-footer__bottom p {
     margin: 0;
+  }
+
+  .site-footer__legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
   }
 </style>
