@@ -32,6 +32,8 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
+      // /admin (Decap CMS) est en noindex et n'a rien à faire dans le sitemap.
+      filter: (page) => !page.includes('/admin'),
       serialize(item) {
         const slug = item.url.replace(/\/$/, '').split('/').pop();
         const lastmod = slug ? blogLastmodBySlug.get(slug) : undefined;
