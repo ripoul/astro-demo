@@ -4,19 +4,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-An Astro 7 static site: a showcase/demo site for a fictional equestrian center ("Les Écuries du Vallon"), used to explore Astro's features (content collections, SEO, Netlify Forms, image optimization). All UI copy and content is in French. Business details in `src/data/site.ts` (name, address, phone, hours...) and `SITE_URL` in `astro.config.mjs` are explicitly fictional placeholder data (marked with ⚠️ comments) — treat them as intentional, not bugs to fix, and change them together if this is ever pointed at a real business.
+An Astro 7 static site: a showcase/demo site for a fictional equestrian center ("Les Écuries du Vallon"), used to explore Astro's features (content collections, SEO, Netlify Forms, image optimization, a Decap CMS admin). All UI copy and content is in French. Business details in `src/data/site.ts` (name, address, phone, hours...) and `SITE_URL` in `astro.config.mjs` are explicitly fictional placeholder data (marked with ⚠️ comments) — treat them as intentional, not bugs to fix, and change them together if this is ever pointed at a real business.
+
+`CLAUDE.md` is a symlink to `AGENTS.md` in this repo (one file on disk, two names) — edit either path, and don't split them into separate documents.
 
 ## Commands
 
 Package manager is pnpm (version pinned via `packageManager` in `package.json`); Node >=22.12.0. There is no test suite/command in this project.
 
-| Command        | Action                                                   |
+| Command        | Action                                                    |
 | :------------- | :-------------------------------------------------------- |
-| `pnpm install` | Install dependencies                                       |
-| `pnpm dev`     | Start the dev server at `localhost:4321`                   |
-| `pnpm build`   | Build the static site to `./dist/` (what Netlify deploys)  |
-| `pnpm preview` | Serve `./dist/` locally to check the production build      |
-| `pnpm lint`    | Run ESLint over the whole project                           |
+| `pnpm install` | Install dependencies                                      |
+| `pnpm dev`     | Start the dev server at `localhost:4321`                  |
+| `pnpm build`   | Build the static site to `./dist/` (what Netlify deploys) |
+| `pnpm preview` | Serve `./dist/` locally to check the production build     |
+| `pnpm lint`    | Run ESLint over the whole project                         |
 
 When starting the dev server yourself, use background mode so it doesn't block:
 
@@ -40,15 +42,25 @@ Every page renders through `src/layouts/BaseLayout.astro`, which centralizes: ti
 
 GA4 is off unless `PUBLIC_GA_ID` is set. When it is, `CookieConsent.astro` shows a banner and, on the visitor's choice, stores it in `localStorage` and fires a `cookie-consent-changed` custom event (typed as a `WindowEventMap` extension in `src/env.d.ts`). `Analytics.astro` checks `localStorage` on load and also listens for that event, only injecting the `gtag.js` script once consent is `granted`. Nothing is requested from Google before that.
 
-### Blog is a content collection
+### Blog and gallery are content collections
 
-`src/content.config.ts` defines the `blog` collection (glob loader over `src/content/blog/**/*.md`) with a schema requiring `title`, `description`, `date`, a `category` enum (`resultats | stage | actualite`), a `cover` image, `coverAlt`, and `draft`. Category labels live in `src/data/blogCategories.ts` rather than in `CategoryBadge.astro`, because Astro components can only export the component itself, not plain values.
+`src/content.config.ts` defines two collections, both a glob loader over markdown files under `src/content/`:
 
-Routes built on the collection:
+- **`blog`** (`src/content/blog/**/*.md`): `title`, `description`, `date`, a `category` enum (`resultats | stage | actualite`), a `cover` image, `coverAlt`, and `draft`. Category labels live in `src/data/blogCategories.ts` rather than in `CategoryBadge.astro`, because Astro components can only export the component itself, not plain values.
+- **`gallery`** (`src/content/gallery/**/*.md`): just `image`, `alt`, `description`, `date` — no title, category, or draft; every entry is one photo with a caption.
+
+Routes built on these collections:
 
 - `src/pages/blog/index.astro` — listing
 - `src/pages/blog/[slug].astro` — one article, via `getStaticPaths()` + `getCollection('blog', ...)`, filtering out drafts
 - `src/pages/blog/categorie/[category].astro` — per-category archive pages, cross-linked from every `CategoryBadge`
+- `src/pages/galerie.astro` — single masonry-layout page over every `gallery` entry (`GalleryCard`), sorted newest-first; a vanilla-JS `<dialog>` lightbox opens a larger `getImage` render (width 1400) with the caption on click
+
+### Decap CMS powers the `/admin` editor
+
+`src/pages/admin.html` + `public/admin/config.yml` wire up [Decap CMS](https://decapcms.org/) (loaded from a CDN `<script>`, no npm dependency or build step) as a browser editor for the `blog` and `gallery` collections. `config.yml`'s two `collections` blocks are a hand-maintained mirror of the schemas in `src/content.config.ts` — changing a field in one place means updating the other by hand. It runs in `publish_mode: editorial_workflow`: saving an entry opens a branch + PR against `main` instead of committing directly, so nothing reaches production before that PR is reviewed/merged (the repo's Netlify Deploy Preview on the PR doubles as the admin preview). The GitHub OAuth handshake is handled by a separate Cloudflare Worker proxy repo (`ripoul/astro-demo-decap-proxy`, not part of this codebase) — see `readme.md` for the full setup and redeploy steps. `/admin` is deliberately excluded from indexing and the sitemap in three places: the `noindex` meta tag in `admin.html`, `Disallow: /admin` in `robots.txt.ts`, and the `filter` option passed to the `sitemap()` integration in `astro.config.mjs`.
+
+`public/admin/preview-templates.js` + `preview.css` register custom `CMS.registerPreviewTemplate` components for both collections so the editor's live preview looks like the real site instead of Decap's unstyled default. These are a **hand-maintained duplicate** of `src/styles/global.css`'s design tokens and the blog/gallery layouts, not derived from them — update both sides together when either changes. To test admin/preview changes locally without real GitHub credentials, swap `backend:` in a throwaway `config.yml` copy for Decap's built-in `{ name: test-repo }` (in-memory, one-click auth, content lost on reload) instead of fighting the real OAuth proxy.
 
 ### Sitemap `lastmod` is computed at config time
 
