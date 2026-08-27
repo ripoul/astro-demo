@@ -1,0 +1,174 @@
+/* Aperçu Decap CMS : reproduction volontairement simplifiée des tokens et
+   styles du site (src/styles/global.css + composants) pour que la
+   prévisualisation d'un article ou d'une photo ressemble à ce qui sera
+   réellement publié. À maintenir en phase si les tokens du site changent. */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Source+Sans+3:wght@400;600;700&display=swap');
+
+:root {
+  --color-bg: #faf6ee;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f1ead9;
+  --color-border: #ddd0b4;
+
+  --color-text: #2b2621;
+  --color-text-muted: #6b6154;
+
+  --color-primary: #3f5a3f;
+  --color-primary-dark: #2c412c;
+
+  --color-accent: #b5792e;
+  --color-accent-dark: #96601f;
+
+  --font-heading: 'Fraunces', 'Georgia', serif;
+  --font-body:
+    'Source Sans 3', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --shadow-md: 0 8px 24px rgba(43, 38, 33, 0.1);
+}
+
+body {
+  margin: 0;
+  padding: 1.5rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1,
+h2 {
+  font-family: var(--font-heading);
+  line-height: 1.15;
+  margin: 0 0 0.6em;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+a {
+  color: var(--color-accent-dark);
+}
+
+/* Bandeau de contexte : rappelle que la mise en page réelle diffère
+   (grille de vignettes, fiche article complète, etc.). */
+.preview-note {
+  margin: 0 0 1.5rem;
+  padding: 0.65rem 1rem;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-alt);
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+/* Article de blog (calque sur src/pages/blog/[slug].astro) --------------- */
+.preview-post__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.preview-post__title {
+  font-size: clamp(1.8rem, 3vw + 1rem, 2.6rem);
+}
+
+.preview-post__cover {
+  width: 100%;
+  margin-block: 2rem;
+  border-radius: var(--radius-md);
+}
+
+.preview-post__content h2 {
+  margin-top: 1.5em;
+}
+
+.preview-post__content blockquote {
+  margin: 1.5rem 0;
+  padding: 0.75rem 1.25rem;
+  border-left: 4px solid var(--color-accent);
+  background: var(--color-surface-alt);
+  color: var(--color-text-muted);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.preview-post__content ul {
+  margin: 1em 0;
+  padding-left: 1.4em;
+  list-style: disc;
+}
+
+.preview-post__content li {
+  margin-bottom: 0.4em;
+}
+
+/* Badge de catégorie (calque sur CategoryBadge.astro) --------------------- */
+.preview-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.85em;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.preview-badge--resultats {
+  background: #f6e6c8;
+  color: #7a4f12;
+}
+
+.preview-badge--stage {
+  background: #dfead9;
+  color: #35502f;
+}
+
+.preview-badge--actualite {
+  background: #dfe6ec;
+  color: #2f4a5c;
+}
+
+/* Photo de galerie (calque sur GalleryCard.astro + la légende de la
+   lightbox dans src/pages/galerie.astro) ----------------------------------- */
+.preview-gallery__card {
+  margin: 0;
+  max-width: 26rem;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
+
+.preview-gallery__image {
+  width: 100%;
+}
+
+.preview-gallery__card figcaption {
+  padding: 1.1rem 1.25rem;
+}
+
+.preview-gallery__description {
+  margin-bottom: 0.35rem;
+  color: var(--color-text);
+}
+
+.preview-gallery__date {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
