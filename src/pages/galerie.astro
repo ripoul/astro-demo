@@ -1,0 +1,168 @@
+---
+import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GalleryCard from '../components/GalleryCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+const sorted = (await getCollection('gallery')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+// Vignette recadrée par GalleryCard (width=500) ; ici on prépare en plus une
+// version large de chaque photo pour la lightbox, sans forcer son ratio.
+const photos = await Promise.all(
+  sorted.map(async (entry) => ({
+    image: entry.data.image,
+    alt: entry.data.alt,
+    description: entry.data.description,
+    date: entry.data.date,
+    fullSrc: (await getImage({ src: entry.data.image, width: 1400 })).src,
+  })),
+);
+---
+
+<BaseLayout
+  title="Galerie"
+  description="Photos du haras : chevaux, installations et moments forts au fil des saisons."
+>
+  <section class="section">
+    <div class="container">
+      <Breadcrumbs items={[{ label: 'Galerie', href: '/galerie' }]} />
+      <SectionHeading
+        as="h1"
+        eyebrow="Galerie"
+        title="Le haras en images"
+        subtitle="Chevaux, installations et moments forts au fil des saisons. Cliquez sur une photo pour l'agrandir."
+      />
+      <div class="gallery-masonry">
+        {photos.map((photo) => <GalleryCard {...photo} />)}
+      </div>
+    </div>
+
+    <dialog
+      id="gallery-lightbox"
+      class="gallery-lightbox"
+      aria-label="Photo agrandie"
+    >
+      <button type="button" class="gallery-lightbox__close" aria-label="Fermer"
+        >&times;</button
+      >
+      <img class="gallery-lightbox__image" alt="" />
+      <div class="gallery-lightbox__caption">
+        <p class="gallery-lightbox__description"></p>
+        <time class="gallery-lightbox__date"></time>
+      </div>
+    </dialog>
+  </section>
+</BaseLayout>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('#gallery-lightbox');
+  const imageEl = dialog?.querySelector<HTMLImageElement>(
+    '.gallery-lightbox__image',
+  );
+  const descriptionEl = dialog?.querySelector<HTMLParagraphElement>(
+    '.gallery-lightbox__description',
+  );
+  const dateEl = dialog?.querySelector<HTMLTimeElement>(
+    '.gallery-lightbox__date',
+  );
+  const closeButton = dialog?.querySelector<HTMLButtonElement>(
+    '.gallery-lightbox__close',
+  );
+
+  document
+    .querySelectorAll<HTMLButtonElement>('.gallery-item')
+    .forEach((item) => {
+      item.addEventListener('click', () => {
+        if (!dialog || !imageEl || !descriptionEl || !dateEl) return;
+
+        imageEl.src = item.dataset.fullSrc ?? '';
+        imageEl.alt = item.dataset.alt ?? '';
+        descriptionEl.textContent = item.dataset.description ?? '';
+        dateEl.textContent = item.dataset.dateLabel ?? '';
+        dateEl.dateTime = item.dataset.date ?? '';
+
+        dialog.showModal();
+      });
+    });
+
+  closeButton?.addEventListener('click', () => dialog?.close());
+
+  // Ferme au clic sur le fond (en dehors de la boîte de contenu du dialog).
+  dialog?.addEventListener('click', (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+</script>
+
+<style>
+  .gallery-masonry {
+    columns: 5 200px;
+    column-gap: 0.75rem;
+  }
+
+  .gallery-lightbox {
+    position: relative;
+    max-width: min(90vw, 60rem);
+    max-height: 90vh;
+    margin: auto;
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-lg);
+    overflow: auto;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+  }
+
+  .gallery-lightbox::backdrop {
+    background: rgba(43, 38, 33, 0.75);
+  }
+
+  .gallery-lightbox__image {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 70vh;
+    margin-inline: auto;
+    background: var(--color-surface-alt);
+  }
+
+  .gallery-lightbox__caption {
+    padding: 1.25rem 1.5rem;
+    text-align: center;
+  }
+
+  .gallery-lightbox__description {
+    margin-bottom: 0.35rem;
+    color: var(--color-text);
+  }
+
+  .gallery-lightbox__date {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .gallery-lightbox__close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 1;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .gallery-lightbox__close:hover {
+    background: rgba(0, 0, 0, 0.7);
+  }
+</style>

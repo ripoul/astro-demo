@@ -68,3 +68,38 @@ collections:
           hint: 'À part pour dépublier un article existant, laisse décoché : le workflow éditorial (PR + Deploy Preview) sert déjà de garde-fou avant publication.',
         }
       - { label: 'Contenu', name: body, widget: markdown }
+
+  - name: gallery
+    label: 'Galerie photo'
+    label_singular: 'Photo'
+    folder: src/content/gallery
+    create: true
+    delete: true
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    identifier_field: alt
+    extension: md
+    format: frontmatter
+    media_folder: '../../assets/images'
+    public_folder: '../../assets/images'
+    fields:
+      - { label: 'Photo', name: image, widget: image, choose_url: false }
+      - {
+          label: "Texte alternatif de l'image",
+          name: alt,
+          widget: string,
+          hint: "Décrit le contenu de la photo pour les lecteurs d'écran (accessibilité).",
+        }
+      - {
+          label: 'Description',
+          name: description,
+          widget: text,
+          hint: 'Légende courte affichée sous la photo.',
+        }
+      - {
+          label: 'Date',
+          name: date,
+          widget: datetime,
+          format: 'YYYY-MM-DD',
+          time_format: false,
+          picker_utc: true,
+        }

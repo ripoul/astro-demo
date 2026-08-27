@@ -90,5 +90,6 @@ export const NAV_LINKS: NavLink[] = [
   { href: '/installations', label: 'Installations' },
   { href: '/tarifs', label: 'Tarifs' },
   { href: '/blog', label: 'Actualités' },
+  { href: '/galerie', label: 'Galerie' },
   { href: '/contact', label: 'Contact' },
 ];
