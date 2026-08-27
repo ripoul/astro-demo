@@ -1,5 +1,7 @@
 ---
 import { NAV_LINKS, SITE } from '../data/site';
+import Facebook from './icons/Facebook.astro';
+import Instagram from './icons/Instagram.astro';
 
 const year = new Date().getFullYear();
 ---
@@ -10,8 +12,16 @@ const year = new Date().getFullYear();
       <p class="site-footer__brand">{SITE.name}</p>
       <p>{SITE.tagline}</p>
       <ul class="site-footer__social">
-        <li><a href={SITE.social.facebook}>Facebook</a></li>
-        <li><a href={SITE.social.instagram}>Instagram</a></li>
+        <li>
+          <a href={SITE.social.facebook} aria-label="Facebook">
+            <Facebook class="site-footer__social-icon" />
+          </a>
+        </li>
+        <li>
+          <a href={SITE.social.instagram} aria-label="Instagram">
+            <Instagram class="site-footer__social-icon" />
+          </a>
+        </li>
       </ul>
     </div>
 
@@ -113,8 +123,29 @@ const year = new Date().getFullYear();
 
   .site-footer__social {
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    gap: 0.75rem;
     margin-top: 1rem;
+  }
+
+  .site-footer__social li {
+    margin-bottom: 0;
+  }
+
+  .site-footer__social a {
+    display: block;
+    line-height: 0;
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+  }
+
+  .site-footer__social a:hover {
+    opacity: 1;
+  }
+
+  .site-footer__social :global(.site-footer__social-icon) {
+    width: 1.75rem;
+    height: 1.75rem;
   }
 
   address {

@@ -1,0 +1,38 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+// Unique per instance so multiple icons on one page don't share a gradient id.
+const gradientId = `instagram-gradient-${crypto.randomUUID()}`;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 448 448"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+  focusable="false"
+>
+  <defs>
+    <linearGradient id={gradientId} x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFDD55"></stop>
+      <stop offset="50%" stop-color="#FF543E"></stop>
+      <stop offset="100%" stop-color="#C837AB"></stop>
+    </linearGradient>
+  </defs>
+  <rect width="448" height="448" rx="100" fill={`url(#${gradientId})`}></rect>
+  <rect
+    x="124"
+    y="124"
+    width="200"
+    height="200"
+    rx="54"
+    fill="none"
+    stroke="#fff"
+    stroke-width="28"></rect>
+  <circle cx="224" cy="224" r="55" fill="none" stroke="#fff" stroke-width="28"
+  ></circle>
+  <circle cx="332" cy="116" r="16" fill="#fff"></circle>
+</svg>

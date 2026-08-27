@@ -4,6 +4,8 @@ import MapEmbed from '../components/MapEmbed.astro';
 import ContactForm from '../components/ContactForm.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Facebook from '../components/icons/Facebook.astro';
+import Instagram from '../components/icons/Instagram.astro';
 import { SITE } from '../data/site';
 ---
 
@@ -50,8 +52,16 @@ import { SITE } from '../data/site';
 
           <h3>Réseaux</h3>
           <ul class="contact-social">
-            <li><a href={SITE.social.facebook}>Facebook</a></li>
-            <li><a href={SITE.social.instagram}>Instagram</a></li>
+            <li>
+              <a href={SITE.social.facebook} aria-label="Facebook">
+                <Facebook class="contact-social-icon" />
+              </a>
+            </li>
+            <li>
+              <a href={SITE.social.instagram} aria-label="Instagram">
+                <Instagram class="contact-social-icon" />
+              </a>
+            </li>
           </ul>
 
           <MapEmbed
@@ -103,8 +113,25 @@ import { SITE } from '../data/site';
 
   .contact-social {
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    gap: 0.75rem;
     margin-bottom: 1.5rem;
+  }
+
+  .contact-social a {
+    display: block;
+    line-height: 0;
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+  }
+
+  .contact-social a:hover {
+    opacity: 1;
+  }
+
+  .contact-social :global(.contact-social-icon) {
+    width: 1.75rem;
+    height: 1.75rem;
   }
 
   .contact-info :global(.map-embed) {
